@@ -1,0 +1,38 @@
+<html ng-app="POS">
+	<head>
+		<title>Hunts Point POS</title>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:200">
+	    <link rel="stylesheet" href="/icono/dist/icono.min.css">
+	    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+	    <style>
+	    	* {
+	    		font-family: Raleway, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	    	}
+	    	.col-centered {
+			    float: none;
+			    margin: 0 auto;
+			}
+	    </style>
+	    <script>
+			var barcode = document.getElementById('barcode');
+			if (barcode) {
+				barcode.focus();
+				barcode.select();
+			}
+		</script>
+	</head>
+
+	<body ng-controller="body" class="fluid-container">
+		
+		<h1 class="text-center">Hunts Point POS</h1>
+		<div ng-view></div>
+
+	    <script src="/jquery/dist/jquery.min.js"></script>
+	    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+		<script src="/angular/angular.min.js"></script>
+		<script src="/angular-route/angular-route.min.js"></script>
+		<script src="/js/pos.js"></script>
+	</body>
+
+</html>

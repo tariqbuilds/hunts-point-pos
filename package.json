@@ -2,7 +2,7 @@
   "name": "hunts-point-pos",
   "version": "0.0.0",
   "description": "A proof-of-concept minus the proof.",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
