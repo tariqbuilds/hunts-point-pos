@@ -14,3 +14,5 @@ app.use(express.static(path.resolve(__dirname + '/../bower_components')));
 app.get('/', function (req, res) {
 	res.sendFile(path.resolve(__dirname, publicPath, 'index.html'));
 });
+
+app.use('/api', require('./api'));
