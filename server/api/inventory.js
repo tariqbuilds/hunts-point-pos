@@ -1,8 +1,9 @@
-var express = require('express');
 var app 	= require('express')();
 var server 	= require('http').Server(app);
-var path 	= require('path');
+var bodyParser = require('body-parser');
 var Datastore = require('nedb');
+
+app.use(bodyParser.json());
 
 module.exports = app;
 
@@ -11,17 +12,20 @@ var inventoryDB = new Datastore({ filename: './server/databases/inventory.db', a
 
 // GET all inventory items
 app.get('/', function (req, res) {
-
-	inventoryDB.find({}, function (err, docs) {
-		res.send(docs);
-	});
-
+	res.send('Inventory API');
 });
 
-app.get('/', function (req, res) {
-
+// GET all inventory items
+app.get('/products', function (req, res) {
 	inventoryDB.find({}, function (err, docs) {
 		res.send(docs);
 	});
+});
 
+// Create inventory product
+app.post('/product', function (req, res) {
+
+	console.log(req.query);
+	console.log(req.body);
+	res.sendStatus(200);
 });

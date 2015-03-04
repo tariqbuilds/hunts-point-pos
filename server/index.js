@@ -2,11 +2,12 @@ var express = require('express');
 var app 	= require('express')();
 var server 	= require('http').Server(app);
 var path 	= require('path');
+var bodyParser = require('body-parser');
 
-server.listen(80);
-console.log('POS Server Started!');
+server.listen(80, function () { console.log('POS Server Started!'); });
 
 var publicPath = '/../public/';
+
 
 app.use(express.static(path.resolve(__dirname + publicPath)));
 app.use(express.static(path.resolve(__dirname + '/../bower_components')));
