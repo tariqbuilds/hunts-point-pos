@@ -1,6 +1,8 @@
  var pos = angular.module('POS', ['ngRoute']);
 
-////////////////// Routing /////////////////////////////
+///////////////////////////////////////////////////
+//////////////////  Routing  ////////////////// //
+//////////////////////////////////////////////////
 
 pos.config(['$routeProvider',
     function($routeProvider) {
@@ -24,6 +26,7 @@ pos.config(['$routeProvider',
           }).
           when('/pos', {
             templateUrl: 'templates/pos.html',
+            controller: 'posController',
           }).
           otherwise({
             redirectTo: '/'
@@ -146,6 +149,55 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 
     
     $location.path('/inventory');
+  };
+
+});
+
+// POS Section
+pos.controller('posController', function ($scope, $location, Inventory) {
+
+  Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+  };
+
+  $scope.cart = {
+    products: [],
+    total: 0,
+  };
+
+  $scope.refreshInventory = function () {
+    Inventory.getProducts().then(function (products) {
+      $scope.inventory = angular.copy(products);
+      $scope.inventoryLastUpdated = new Date();
+    });
+  };
+
+  $scope.refreshInventory();
+
+  $scope.addProductToCart = function (barcode) {
+    var product = $scope.isValidProduct(barcode);
+    product.quantity = 1;
+    $scope.cart.products = $scope.cart.products.concat([product]);
+    $scope.updateCartTotal();
+    $scope.barcode = '';
+  };
+
+  $scope.removeProductFromCart = function (productIndex) {
+    $scope.cart.products.remove(productIndex);
+    $scope.updateCartTotal();
+  };
+
+  $scope.isValidProduct = function (barcode) {
+    var result = _.find($scope.inventory, { barcode: barcode.toString() });
+    return result;
+  };
+
+  $scope.updateCartTotal = function () {
+    $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
+      return total + parseFloat( product.price );
+    }, 0);
   };
 
 });

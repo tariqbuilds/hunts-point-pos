@@ -13,13 +13,6 @@
 			    margin: 0 auto;
 			}
 	    </style>
-	    <script>
-			var barcode = document.getElementById('barcode');
-			if (barcode) {
-				barcode.focus();
-				barcode.select();
-			}
-		</script>
 	</head>
 
 	<body ng-controller="body" class="container">
@@ -34,7 +27,17 @@
 
 		<script src="/angular/angular.min.js"></script>
 		<script src="/angular-route/angular-route.min.js"></script>
+		<script src="/lodash/lodash.min.js"></script>
 		<script src="/js/pos.js"></script>
+	    <script>
+	    	window.onload = function () {
+				var barcode = document.getElementById('barcode');
+				if (barcode) {
+					barcode.focus();
+					barcode.select();
+				}
+	    	};
+		</script>
 	</body>
 
 </html>

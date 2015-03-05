@@ -1,1 +1,50 @@
-POS
+<h3 class="text-center"><a href="#/pos">POS</a></h3>
+
+<button class="btn btn-info" ng-click="refreshInventory()">
+	<i class="glyphicon glyphicon-refresh"></i> Inventory
+</button>
+<small>Last Updated: {{ inventoryLastUpdated | date: 'short'}}</small>
+
+<br/><br/>
+<div class="col-md-10">
+	
+	<form class="form-horizontal col-md-12 col-centered" name="addProductForm" ng-submit="isValidProduct(barcode) && addProductToCart(barcode)">
+
+		<div class="form-group">
+			<label class="col-md-2" for="barcode">Scan Barcode</label>
+			<div class="col-md-10">
+				<input type="text" class="form-control" id="barcode" name="barcode" ng-model="barcode" required/>
+			</div>
+		</div>
+
+		<!-- <div class="form-error" ng-hide="isValidProduct(barcode)">Barcode not found.</div> -->
+	</form>
+
+	
+	<div class="lead text-success">Total: {{ cart.total | currency }}</div>
+
+	<table class="col-md-12">
+		<thead>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+				<td>Quantity</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="product in cart.products track by $index">
+				<td> {{ product.name }} </td>
+				<td> {{ product.price }} </td>
+				<td> 
+					<input type="number" step="1" min="1" class="form-control lead" ng-model="product.quantity"/> 
+				</td>
+				<td>
+					<button class="btn btn-danger" ng-click="removeProductFromCart($index)">
+						<i class="glyphicon glyphicon-remove"></i>
+					</button>
+				</td>
+			</tr>
+		</tbody>	
+	</table>
+
+</div>
