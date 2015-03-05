@@ -1,4 +1,4 @@
-<h3 class="text-center">Inventory</h3>
+<h3 class="text-center"><a href="#/inventory/">Inventory</a></h3>
 
 <div class="container">
 	
@@ -19,11 +19,11 @@
 		<tbody>
 			<tr ng-repeat="product in inventory">
 				<td> 
-					<a href="" ng-click="editProduct(product.id)">
+					<a href="" ng-click="editProduct(product._id)">
 						{{ product.name }} 
 					</a>
 				</td>
-				<td> $ {{ product.price }} </td>
+				<td> {{ product.price |  currency:"$ "}} </td>
 				<td> {{ product.quantity_on_hand }} </td>
 				<td> 
 					<a class="btn btn-warning" ng-click="editProduct(product._id)">
@@ -33,5 +33,7 @@
 			</tr>
 		</tbody>
 	</table>
+
+	<div ng-if="inventory.length === 0">No products found.</div>
 
 </div>

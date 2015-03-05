@@ -59,6 +59,12 @@ pos.service('Inventory', ['$http', function ($http) {
         });
     };
 
+    this.createProduct = function (newProduct) {
+        return $http.post(apiInventoryAddress + '/product', newProduct).then(function (res) {
+          return res.data;
+        });
+    };
+
 }]);
 
 
@@ -112,13 +118,14 @@ pos.controller('inventoryController', function ($scope, $location, Inventory) {
 
 });
 
-pos.controller('newProductController', function ($scope, $location) {
+pos.controller('newProductController', function ($scope, $location, Inventory) {
   
   $scope.createProduct = function (product) {
-    // call api to create product
-    console.log(product);
+    
+    Inventory.createProduct($scope.newProduct).then(function (product) {
+      console.log(product);
+    });
 
-    // go back to inventory
     $location.path('/inventory');
   };
 
@@ -133,11 +140,12 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 
   $scope.saveProduct = function (product) {
     
-    // call api to save product
     Inventory.updateProduct(product).then(function (updatedProduct) {
       console.log('updated!');
     });
 
+    
+    $location.path('/inventory');
   };
 
 });
