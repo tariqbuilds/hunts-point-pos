@@ -13,9 +13,23 @@ var inventoryDB = new Datastore({
 	autoload: true 
 })
 
-// GET all inventory items
+// GET inventory
 app.get('/', function (req, res) {
 	res.send('Inventory API')
+})
+
+// GET a product from inventory by _id
+app.get('/product', function (req, res) {
+	
+	if (!req.query.id) {
+		res.status(500).send('ID field is required.')
+	}
+	else {
+		inventoryDB.findOne({_id: req.query.id}, function (err, product) {
+			res.send(product)
+		});
+	}
+
 })
 
 // GET all inventory items
@@ -32,11 +46,25 @@ app.post('/product', function (req, res) {
 	var newProduct = req.body
 	
 	inventoryDB.insert(newProduct, function (err, product) {
-		if (err) {
-			res.write(err)
-			res.sendStatus(500)
-		}
-
-		res.sendStatus(200);
+		if (err) 
+			res.status(500).send(err)
+		else 
+			res.sendStatus(200)
 	})
+})
+
+// Update inventory product
+app.put('/product', function (req, res) {
+
+	var productId = req.body._id
+	
+	inventoryDB.update({ _id: productId }, req.body, {}, function (err, numReplaced, product) {
+		
+		if (err) 
+			res.status(500).send(err)
+		else
+			res.sendStatus(200)
+		
+	});
+
 })

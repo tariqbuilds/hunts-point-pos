@@ -32,6 +32,37 @@ pos.config(['$routeProvider',
     }]);
 
 ///////////////////////////////////////////////////
+//////////////////  Services  ////////////////// //
+////////////////////////////////////////////////////
+
+pos.service('Inventory', ['$http', function ($http) {
+
+    var apiInventoryAddress = '/api/inventory';
+
+    this.getProducts = function () {
+        return $http.get(apiInventoryAddress + '/products').then(function (res) {
+          return res.data;
+        });
+    };
+
+    this.getProduct = function (productId) {
+        return $http.get(apiInventoryAddress + '/product', {
+          params: { id: productId }
+        }).then(function (res) {
+          return res.data;
+        });
+    };
+
+    this.updateProduct = function (product) {
+        return $http.put(apiInventoryAddress + '/product', product).then(function (res) {
+          return res.data;
+        });
+    };
+
+}]);
+
+
+///////////////////////////////////////////////////
 ////////////////// Directives ////////////////// //
 ////////////////////////////////////////////////////
 
@@ -67,29 +98,12 @@ pos.controller('body', function ($scope) {
 
 // Inventory Section
 
-pos.controller('inventoryController', function ($scope, $location) {
+pos.controller('inventoryController', function ($scope, $location, Inventory) {
 
   // get and set inventory
-  $scope.inventory = [
-    {
-      id: 48,
-      name: "Product 1",
-      price: 13.21,
-      quantity_on_hand: 259,
-    },
-    {
-      id: 21,
-      name: "Product 2",
-      price: 25.34,
-      quantity_on_hand: 2,
-    },
-    {
-      id: 32,
-      name: "Product 3",
-      price: 32.00,
-      quantity_on_hand: 15,
-    },
-  ];
+  Inventory.getProducts().then(function (products) {
+    $scope.inventory = angular.copy(products);
+  });
 
   // go to edit page
   $scope.editProduct = function (productId) {
@@ -110,16 +124,20 @@ pos.controller('newProductController', function ($scope, $location) {
 
 });
 
-pos.controller('editProductController', function ($scope, $location) {
-  
+pos.controller('editProductController', function ($scope, $location, $routeParams, Inventory) {
+    
+  // get and set inventory
+  Inventory.getProduct($routeParams.productId).then(function (product) {
+    $scope.product = angular.copy(product);
+  });
+
   $scope.saveProduct = function (product) {
+    
     // call api to save product
-    console.log(product);
+    Inventory.updateProduct(product).then(function (updatedProduct) {
+      console.log('updated!');
+    });
 
-    // go back to inventory
-    $location.path('/inventory');
   };
-
-  $scope.product = {barcode: "kjnfkjnkgndk", name: "lsglnl", price: 14.1, quantity_on_hand: 8};
 
 });

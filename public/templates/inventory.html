@@ -23,10 +23,10 @@
 						{{ product.name }} 
 					</a>
 				</td>
-				<td> {{ product.price }} </td>
+				<td> $ {{ product.price }} </td>
 				<td> {{ product.quantity_on_hand }} </td>
 				<td> 
-					<a class="btn btn-warning" ng-click="editProduct(product.id)">
+					<a class="btn btn-warning" ng-click="editProduct(product._id)">
 						Edit Item
 					</a>
 				</td>
