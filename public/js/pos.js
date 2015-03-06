@@ -152,7 +152,7 @@ pos.directive('checkout',function () {
   return {
     restrict: 'E',
     scope: {
-      sendReceipt: '&',
+      printReceipt: '&',
       cartTotal: '='
     },
     templateUrl: 'templates/directives/checkout.html',
@@ -165,6 +165,11 @@ pos.directive('checkout',function () {
         }
         else 
           return 0;
+      };
+
+      scope.print = function () {
+        el.find('div').eq(0).modal('hide');
+        scope.printReceipt({ payment: scope.paymentAmount });
       };
 
     }
@@ -229,9 +234,11 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 // POS Section
 pos.controller('posController', function ($scope, $location, Inventory) {
 
-  $scope.cart = {
-    products: [],
-    total: 0,
+  var startFreshCart = function () {
+      $scope.cart = {
+        products: [],
+        total: 0,
+      };
   };
 
   $scope.refreshInventory = function () {
@@ -243,6 +250,8 @@ pos.controller('posController', function ($scope, $location, Inventory) {
 
   $scope.refreshInventory();
 
+  startFreshCart();
+  
   var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
     $scope.updateCartTotal();
@@ -257,7 +266,6 @@ pos.controller('posController', function ($scope, $location, Inventory) {
 
   $scope.addManualItem = function (product) {
     product.quantity = 1;
-    console.log(product);
     addProductAndUpdateCart(product);
   };
 
@@ -275,6 +283,16 @@ pos.controller('posController', function ($scope, $location, Inventory) {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
       return total + ( parseFloat(product.price * product.quantity) );
     }, 0);
+  };
+
+  $scope.printReceipt = function (payment) {
+    // print receipt
+    var cart = angular.copy($scope.cart);
+    console.log(cart, payment);
+
+    // clear cart and start fresh
+    startFreshCart();
+  
   };
 
 });

@@ -4,7 +4,7 @@
 <button class="btn btn-info" ng-click="refreshInventory()">
 	<i class="glyphicon glyphicon-refresh"></i> Inventory
 </button>
-<small>Last Updated: {{ inventoryLastUpdated | date: 'short'}}</small>
+<small>Last Updated: {{ inventoryLastUpdated | date: 'short' }}</small>
 <!-- Update Inventory -->
 
 <br/><br/>
@@ -14,6 +14,10 @@
 	.table thead tr td {
 		padding: 25px;
 	}	
+
+	.modal-body {
+		padding: 20px;
+	}
 </style>
 
 <table class="col-md-12 table table-hover table-striped table-bordered">
@@ -23,9 +27,11 @@
 				<!-- Barcode Input -->
 				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
 				<!-- Barcode Input -->
-
+				
+				Or
+				
 				<!-- Manual Item Button -->
-				<add-manual-item class="col-md-2 pull-right" add-item="addManualItem(item)"></add-manual-item>
+				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
 				<!-- Manual Item Button -->
 			</td>
 			<td> 
@@ -35,7 +41,7 @@
 				</h3>
 			</td>
 			<td>
-				<checkout cart-total="cart.total"></checkout>
+				<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 			</td>
 		</tr>
 		<tr>
