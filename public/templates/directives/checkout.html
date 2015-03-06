@@ -1,0 +1,44 @@
+<button class="btn btn-block btn-success lead" data-toggle="modal" data-target="#checkout">
+  <h2>
+    <i class="glyphicon glyphicon-shopping-cart"></i>
+    Checkout
+  </h2>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Checkout</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="lead text-success" ng-if="checkoutForm.payment">
+          {{ getChangeDue() | currency }}
+        </div>
+
+        <form class="form-horizontal" 
+            name="checkoutForm" 
+            ng-submit="checkoutForm.$valid && sendReceipt()">
+
+          <div class="form-group" ng-class="{ 'has-error': checkoutForm.payment.$error.required }">
+            <div class="input-group">
+              <div class="input-group-addon">$</div>
+              <input type="number" step="any" min="0" class="form-control input-lg" name="payment" ng-model="paymentAmount" required/>
+            </div>
+          </div>  
+
+          <p class="text-danger" ng-show="checkoutForm.payment.$error.required">Enter payment amount.</p>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="addManualItemForm.$valid && add()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

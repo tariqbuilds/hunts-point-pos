@@ -148,6 +148,30 @@ pos.directive('addManualItem',function () {
 
 });
 
+pos.directive('checkout',function () {
+  return {
+    restrict: 'E',
+    scope: {
+      sendReceipt: '&',
+      cartTotal: '='
+    },
+    templateUrl: 'templates/directives/checkout.html',
+    link: function (scope, el) {
+      
+      scope.getChangeDue = function () {
+        if (scope.paymentAmount && scope.paymentAmount > scope.cartTotal) {
+          var change =  parseFloat(scope.paymentAmount) - parseFloat(scope.cartTotal);
+          return change;
+        }
+        else 
+          return 0;
+      };
+
+    }
+  };
+
+});
+
 /////////////////////////////////////////////////////
 ////////////////// Controllers ////////////////// //
 ////////////////////////////////////////////////////

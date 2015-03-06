@@ -1,9 +1,11 @@
 <h3 class="text-center"><a href="#/pos">POS</a></h3>
 
+<!-- Update Inventory -->
 <button class="btn btn-info" ng-click="refreshInventory()">
 	<i class="glyphicon glyphicon-refresh"></i> Inventory
 </button>
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short'}}</small>
+<!-- Update Inventory -->
 
 <br/><br/>
 <br/><br/>
@@ -18,19 +20,22 @@
 	<thead>
 		<tr>
 			<td colspan="3">
-				<barcode-scanner 
-					validate-product="isValidProduct(barcode)" 
-					add-product="addProductToCart(barcode)">
-				</barcode-scanner>
-			</td>
-			<td>
-				<add-manual-item add-item="addManualItem(item)"></add-manual-item>
+				<!-- Barcode Input -->
+				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
+				<!-- Barcode Input -->
+
+				<!-- Manual Item Button -->
+				<add-manual-item class="col-md-2 pull-right" add-item="addManualItem(item)"></add-manual-item>
+				<!-- Manual Item Button -->
 			</td>
 			<td> 
 				<h3>
 					Total: 
 					<span class="text-success">{{ cart.total | currency }}</span> 
 				</h3>
+			</td>
+			<td>
+				<checkout cart-total="cart.total"></checkout>
 			</td>
 		</tr>
 		<tr>
