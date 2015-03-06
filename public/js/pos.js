@@ -38,6 +38,12 @@ pos.config(['$routeProvider',
 //////////////////  Services  ////////////////// //
 ////////////////////////////////////////////////////
 
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 pos.service('Inventory', ['$http', function ($http) {
 
     var apiInventoryAddress = '/api/inventory';
@@ -89,8 +95,52 @@ pos.directive('productForm',function ($location) {
       el.find('form').eq(0).find('input').eq(0).select();
 
       scope.save = function () {
-        console.log('saving form');
         scope.onSave({ product: scope.product });
+      };
+
+    }
+  };
+
+});
+
+pos.directive('barcodeScanner',function ($location) {
+  return {
+    restrict: 'E',
+    scope: {
+      addProduct: '&',
+      validateProduct: '&',
+    },
+    templateUrl: 'templates/directives/barcode-scanner.html',
+    link: function (scope, el) {
+      
+      var $barcodeField = el.find('input');
+
+      $barcodeField.focus();
+      
+      scope.clearBarcode = function () {
+        $barcodeField.val('');
+        return true;
+      };
+
+    }
+  };
+
+});
+
+pos.directive('addManualItem',function () {
+  return {
+    restrict: 'E',
+    scope: {
+      addItem: '&'
+    },
+    templateUrl: 'templates/directives/add-manual-item.html',
+    link: function (scope, el) {
+      
+      scope.add = function () {
+        scope.manualItem.name = "----";
+        scope.addItem({item: scope.manualItem});
+        el.find('div').eq(0).modal('hide');
+        scope.manualItem = '';
       };
 
     }
@@ -126,7 +176,6 @@ pos.controller('newProductController', function ($scope, $location, Inventory) {
   $scope.createProduct = function (product) {
     
     Inventory.createProduct($scope.newProduct).then(function (product) {
-      console.log(product);
     });
 
     $location.path('/inventory');
@@ -156,12 +205,6 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 // POS Section
 pos.controller('posController', function ($scope, $location, Inventory) {
 
-  Array.prototype.remove = function(from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from : from;
-    return this.push.apply(this, rest);
-  };
-
   $scope.cart = {
     products: [],
     total: 0,
@@ -176,12 +219,22 @@ pos.controller('posController', function ($scope, $location, Inventory) {
 
   $scope.refreshInventory();
 
-  $scope.addProductToCart = function (barcode) {
-    var product = $scope.isValidProduct(barcode);
-    product.quantity = 1;
+  var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
     $scope.updateCartTotal();
     $scope.barcode = '';
+  };
+
+  $scope.addProductToCart = function (barcode) {
+    var product = $scope.isValidProduct(barcode);
+    product.quantity = 1;
+    addProductAndUpdateCart(product);
+  };
+
+  $scope.addManualItem = function (product) {
+    product.quantity = 1;
+    console.log(product);
+    addProductAndUpdateCart(product);
   };
 
   $scope.removeProductFromCart = function (productIndex) {
@@ -190,13 +243,13 @@ pos.controller('posController', function ($scope, $location, Inventory) {
   };
 
   $scope.isValidProduct = function (barcode) {
-    var result = _.find($scope.inventory, { barcode: barcode.toString() });
+    var result = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
     return result;
   };
 
   $scope.updateCartTotal = function () {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
-      return total + parseFloat( product.price );
+      return total + ( parseFloat(product.price * product.quantity) );
     }, 0);
   };
 

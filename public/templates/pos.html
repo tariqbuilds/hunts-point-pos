@@ -6,45 +6,58 @@
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short'}}</small>
 
 <br/><br/>
-<div class="col-md-10">
-	
-	<form class="form-horizontal col-md-12 col-centered" name="addProductForm" ng-submit="isValidProduct(barcode) && addProductToCart(barcode)">
+<br/><br/>
 
-		<div class="form-group">
-			<label class="col-md-2" for="barcode">Scan Barcode</label>
-			<div class="col-md-10">
-				<input type="text" class="form-control" id="barcode" name="barcode" ng-model="barcode" required/>
-			</div>
-		</div>
+<style>
+	.table thead tr td {
+		padding: 25px;
+	}	
+</style>
 
-		<!-- <div class="form-error" ng-hide="isValidProduct(barcode)">Barcode not found.</div> -->
-	</form>
-
-	
-	<div class="lead text-success">Total: {{ cart.total | currency }}</div>
-
-	<table class="col-md-12">
-		<thead>
-			<tr>
-				<td>Name</td>
-				<td>Price</td>
-				<td>Quantity</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr ng-repeat="product in cart.products track by $index">
-				<td> {{ product.name }} </td>
-				<td> {{ product.price }} </td>
-				<td> 
-					<input type="number" step="1" min="1" class="form-control lead" ng-model="product.quantity"/> 
-				</td>
-				<td>
-					<button class="btn btn-danger" ng-click="removeProductFromCart($index)">
-						<i class="glyphicon glyphicon-remove"></i>
-					</button>
-				</td>
-			</tr>
-		</tbody>	
-	</table>
-
-</div>
+<table class="col-md-12 table table-hover table-striped table-bordered">
+	<thead>
+		<tr>
+			<td colspan="3">
+				<barcode-scanner 
+					validate-product="isValidProduct(barcode)" 
+					add-product="addProductToCart(barcode)">
+				</barcode-scanner>
+			</td>
+			<td>
+				<add-manual-item add-item="addManualItem(item)"></add-manual-item>
+			</td>
+			<td> 
+				<h3>
+					Total: 
+					<span class="text-success">{{ cart.total | currency }}</span> 
+				</h3>
+			</td>
+		</tr>
+		<tr>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th>Total</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="product in cart.products track by $index">
+			<td class="col-md-2"> {{ product.name }} </td>
+			<td class="col-md-2"> {{ product.price | currency }} </td>
+			<td class="col-md-2"> 
+				<div class="col-md-10">
+					<input type="number" step="1" min="1" class="form-control" ng-model="product.quantity" ng-change="updateCartTotal()" /> 
+				</div>	
+			</td>
+			<td class="col-md-2">
+				{{ product.price * product.quantity | currency }}
+			</td>
+			<td class="col-md-2">
+				<button class="btn btn-danger" ng-click="removeProductFromCart($index)">
+					<i class="glyphicon glyphicon-remove"></i>
+				</button>
+			</td>
+		</tr>
+	</tbody>	
+</table>

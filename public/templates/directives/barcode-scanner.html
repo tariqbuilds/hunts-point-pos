@@ -1,0 +1,10 @@
+<form class="form-horizontal" name="addProductForm" ng-submit="validateProduct({barcode: barcode}) && clearBarcode() && addProduct({barcode: barcode})">
+	<div class="form-group">
+		<label class="col-md-1 lead" for="barcode">
+			<i class="glyphicon glyphicon-barcode"></i>
+		</label>
+		<div class="col-md-10">
+			<input type="text" class="form-control" id="barcode" name="barcode" ng-model="barcode" required/>
+		</div>
+	</div>
+</form>
