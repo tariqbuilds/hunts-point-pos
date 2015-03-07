@@ -1,13 +1,13 @@
 <h3 class="text-center"><a href="#/pos">POS</a></h3>
 
 <!-- Update Inventory -->
-<button class="btn btn-info col-md-5" ng-click="refreshInventory()">
+<button class="btn btn-info" ng-click="refreshInventory()">
 	<i class="glyphicon glyphicon-refresh"></i> Inventory
 </button>
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short' }}</small>
 <!-- Update Inventory -->
 
-<div class="pull-right col-md-5">
+<div class="pull-right">
 	Total: <span class="text-success">{{ cart.total | currency }}</span>
 	<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 </div>
@@ -24,12 +24,12 @@
 <table class="col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
-			<td colspan="3">
+			<td colspan="2">
 				<!-- Barcode Input -->
 				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
 				<!-- Barcode Input -->
 			</td>
-			<td colspan="2">
+			<td colspan="3">
 				<!-- Manual Item Button -->
 				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
 				<!-- Manual Item Button -->
