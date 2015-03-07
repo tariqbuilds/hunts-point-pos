@@ -7,41 +7,32 @@
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short' }}</small>
 <!-- Update Inventory -->
 
+<div class="pull-right">
+	Total: <span class="text-success">{{ cart.total | currency }}</span>
+	<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
+</div>
+
 <br/><br/>
 <br/><br/>
 
 <style>
-	.table thead tr td {
-		padding: 25px;
-	}	
-
 	.modal-body {
 		padding: 20px;
 	}
 </style>
 
-<table class="col-md-12 table table-hover table-striped table-bordered">
+<table class="col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
 			<td colspan="3">
 				<!-- Barcode Input -->
 				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
 				<!-- Barcode Input -->
-				
-				Or
-				
+			</td>
+			<td colspan="2">
 				<!-- Manual Item Button -->
 				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
 				<!-- Manual Item Button -->
-			</td>
-			<td> 
-				<h3>
-					Total: 
-					<span class="text-success">{{ cart.total | currency }}</span> 
-				</h3>
-			</td>
-			<td>
-				<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 			</td>
 		</tr>
 		<tr>
@@ -69,6 +60,9 @@
 					<i class="glyphicon glyphicon-remove"></i>
 				</button>
 			</td>
+		</tr>
+		<tr ng-if="!cart.products.length">
+			<td colspan="5">Scan products or add unlisted item above.</td>
 		</tr>
 	</tbody>	
 </table>

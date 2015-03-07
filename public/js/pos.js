@@ -168,8 +168,13 @@ pos.directive('checkout',function () {
       };
 
       scope.print = function () {
+        if (scope.cartTotal > scope.paymentAmount) return;
+
+        var paymentAmount = angular.copy(scope.paymentAmount);
+        scope.printReceipt({ payment: paymentAmount });
+
         el.find('div').eq(0).modal('hide');
-        scope.printReceipt({ payment: scope.paymentAmount });
+        delete scope.paymentAmount;
       };
 
     }
@@ -239,6 +244,8 @@ pos.controller('posController', function ($scope, $location, Inventory) {
         products: [],
         total: 0,
       };
+
+      $('#barcode').focus();
   };
 
   $scope.refreshInventory = function () {
