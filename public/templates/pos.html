@@ -1,13 +1,13 @@
 <h3 class="text-center"><a href="#/pos">POS</a></h3>
 
 <!-- Update Inventory -->
-<button class="btn btn-info" ng-click="refreshInventory()">
+<button class="btn btn-info col-md-5" ng-click="refreshInventory()">
 	<i class="glyphicon glyphicon-refresh"></i> Inventory
 </button>
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short' }}</small>
 <!-- Update Inventory -->
 
-<div class="pull-right">
+<div class="pull-right col-md-5">
 	Total: <span class="text-success">{{ cart.total | currency }}</span>
 	<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 </div>
