@@ -301,6 +301,21 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 // POS Section
 pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
 
+  var startCart = function () {
+    var cartJSON = localStorage.getItem('cart');
+
+    if (cartJSON) {
+      $scope.cart = JSON.parse(cartJSON);
+    }
+    else {
+      $scope.cart = {
+          products: [],
+          total: 0,
+        };
+    }
+
+  };
+
   var startFreshCart = function () {
       $scope.cart = {
         products: [],
@@ -319,7 +334,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.refreshInventory();
 
-  startFreshCart();
+  startCart();
   
   var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
@@ -355,10 +370,18 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     return _.find($scope.inventory, { barcode: barcode.toString() });
   };
 
+  var updateCartInLocalStorage = function () {
+    var cartJSON = JSON.stringify($scope.cart);
+    console.log(cartJSON);
+    localStorage.setItem('cart', cartJSON);
+  };
+
   $scope.updateCartTotal = function () {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
       return total + ( parseFloat(product.price * product.quantity) );
     }, 0);
+
+    updateCartInLocalStorage();
   };
 
   $scope.printReceipt = function (payment) {

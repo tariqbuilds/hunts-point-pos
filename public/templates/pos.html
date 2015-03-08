@@ -18,14 +18,15 @@
 <table class="col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
-			<td colspan="2">
+			<td colspan="5">
 				<!-- Barcode Input -->
 				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
 				<!-- Barcode Input -->
-			</td>
-			<td colspan="3">
+				
+				Or
+				
 				<!-- Manual Item Button -->
-				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
+				<add-manual-item class="col-md-2 pull-right" add-item="addManualItem(item)"></add-manual-item>
 				<!-- Manual Item Button -->
 			</td>
 		</tr>
