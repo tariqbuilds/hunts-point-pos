@@ -55,9 +55,8 @@ pos.service('Inventory', ['$http', function ($http) {
     };
 
     this.getProduct = function (productId) {
-        return $http.get(apiInventoryAddress + '/product', {
-          params: { id: productId }
-        }).then(function (res) {
+        var url = apiInventoryAddress + '/product/' + productId;
+        return $http.get(url).then(function (res) {
           return res.data;
         });
     };
@@ -68,8 +67,48 @@ pos.service('Inventory', ['$http', function ($http) {
         });
     };
 
+    this.decrementQuantity = function (productId, quantity) {
+      return $http.put(apiInventoryAddress + '/product', product).then(function (res) {
+          return res.data;
+        });
+    };
+
     this.createProduct = function (newProduct) {
         return $http.post(apiInventoryAddress + '/product', newProduct).then(function (res) {
+          return res.data;
+        });
+    };
+
+    this.removeProduct = function (productId) {
+        return $http.delete(apiInventoryAddress + '/product/' + productId).then(function (res) {
+          return res.data;
+        });
+    };
+
+}]);
+
+pos.service('Transactions', ['$http', function ($http, Inventory) {
+
+    var transactionApiUrl = '/api/transactions/';
+
+    this.getAll = function () {
+        var url = transactionApiUrl + 'all';
+
+        return $http.get(url).then(function (res) {
+          return res.data;
+        });
+    };
+
+    this.getOne = function (transactionId) {
+        var url = transactionApiUrl + transactionId;
+
+        return $http.put(url).then(function (res) {
+          return res.data;
+        });
+    };
+
+    this.add = function (transaction) {
+        return $http.post(transactionApiUrl + 'new', transaction).then(function (res) {
           return res.data;
         });
     };
@@ -92,7 +131,16 @@ pos.directive('productForm',function ($location) {
     link: function (scope, el) {
 
       // highlight barcode field
-      el.find('form').eq(0).find('input').eq(0).select();
+      var $barcode = el.find('form').eq(0).find('input').eq(0);
+      var $name = el.find('form').eq(0).find('input').eq(1);
+      $barcode.select();
+
+      scope.tabOnEnter = function ($event) {
+        if ($event.keyCode === 13) {
+          $name.select(); 
+          $event.preventDefault();
+        }
+      };
 
       scope.save = function () {
         scope.onSave({ product: scope.product });
@@ -205,14 +253,23 @@ pos.controller('inventoryController', function ($scope, $location, Inventory) {
 
 });
 
-pos.controller('newProductController', function ($scope, $location, Inventory) {
+pos.controller('newProductController', function ($scope, $location, $route, Inventory) {
   
+  $scope.addMultipleProducts = false;
+
   $scope.createProduct = function (product) {
     
     Inventory.createProduct($scope.newProduct).then(function (product) {
+
+      if ($scope.addMultipleProducts) refreshForm();
+      else $location.path('/inventory');
+      
     });
 
-    $location.path('/inventory');
+  };
+
+  var refreshForm = function () {
+    $scope.newProuct = {};
   };
 
 });
@@ -230,14 +287,19 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
       console.log('updated!');
     });
 
-    
     $location.path('/inventory');
+  };
+
+  $scope.deleteProduct = function () {
+    Inventory.removeProduct($scope.product._id).then(function () {
+      $location.path('/inventory');
+    });
   };
 
 });
 
 // POS Section
-pos.controller('posController', function ($scope, $location, Inventory) {
+pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
 
   var startFreshCart = function () {
       $scope.cart = {
@@ -265,8 +327,16 @@ pos.controller('posController', function ($scope, $location, Inventory) {
     $scope.barcode = '';
   };
 
+  $scope.getCleanedProduct = function (barcode) {
+    var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
+    product.cart_item_id = $scope.cart.products.length + 1;
+    delete product.quantity_on_hand;
+    delete product.food;
+    return product;
+  };
+
   $scope.addProductToCart = function (barcode) {
-    var product = $scope.isValidProduct(barcode);
+    var product = $scope.getCleanedProduct(barcode);
     product.quantity = 1;
     addProductAndUpdateCart(product);
   };
@@ -282,8 +352,7 @@ pos.controller('posController', function ($scope, $location, Inventory) {
   };
 
   $scope.isValidProduct = function (barcode) {
-    var result = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
-    return result;
+    return _.find($scope.inventory, { barcode: barcode.toString() });
   };
 
   $scope.updateCartTotal = function () {
@@ -295,10 +364,17 @@ pos.controller('posController', function ($scope, $location, Inventory) {
   $scope.printReceipt = function (payment) {
     // print receipt
     var cart = angular.copy($scope.cart);
-    console.log(cart, payment);
+    cart.payment = angular.copy(payment);
+    cart.date = new Date();
 
-    // clear cart and start fresh
-    startFreshCart();
+    // save to database
+    Transactions.add(cart).then(function (res) {
+
+      // clear cart and start fresh
+      startFreshCart();
+      
+    });
+
   
   };
 

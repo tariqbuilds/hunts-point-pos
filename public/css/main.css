@@ -1,7 +1,14 @@
+body {
+}
+
 .modal.fade {
    -webkit-transition: opacity 0.10s linear;
       -moz-transition: opacity 0.10s linear;
        -ms-transition: opacity 0.10s linear;
         -o-transition: opacity 0.10s linear;
            transition: opacity 0.10s linear;
+ }
+
+ legend {
+ 	margin-top: 40px;
  }

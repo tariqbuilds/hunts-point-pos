@@ -1,5 +1,11 @@
 <h3 class="text-center"><a href="#/inventory/">Inventory</a></h3>
 
-<legend class="text-center">Edit Product</legend>
+<legend class="text-center">
+	Edit Product
+	<button class="btn btn-danger btn-xs pull-right" ng-click="deleteProduct()">
+		<i class="glyphicon glyphicon-remove"></i>
+		Product
+	</button>
+</legend>
 
 <product-form product="product" on-save="saveProduct(product)"></product-form>
