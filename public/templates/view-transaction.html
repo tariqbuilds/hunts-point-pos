@@ -1,0 +1,75 @@
+<h3 class="text-center">POS</h3>
+
+<br/><br/>
+
+<style>
+	table.receipt {
+		float: none;
+		margin: 0 auto;
+		width: 300px;
+		border: 1px solid black;
+		background-color: #efefef;
+	}
+
+	table.receipt thead tr th {
+		padding: 20px;
+	}
+
+	table.receipt tbody tr td {
+		text-align: center;
+	}
+
+	table.receipt tr.separator {
+		border-bottom: 1px dashed black;
+	}
+
+	table.receipt td {
+		padding: 25px;
+	}
+
+	table.receipt tbody tr td {
+		padding: 10px;
+		margin-bottom: 30px;
+	}
+</style>
+
+<table class="receipt">
+	<thead>
+		<tr>
+			<th  colspan="3" class="text-center">Store Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td colspan="3"> 
+				<small>{{ transaction.date | date:'medium' }}</small>
+			</td>
+		</tr>
+		<tr ng-repeat="product in transaction.products">
+			<td> {{ product.name }} </td>
+			<td> {{ product.quantity }} </td>
+			<td> 
+				<span ng-if="product.quantity > 1">
+					{{ ( product.price * product.quantity ) | currency }} 
+					<br/> 
+					<small>({{ product.price | currency }} each)</small>
+				</span> 
+
+				<span ng-if="product.quantity === 1">
+					{{ product.price | currency }}
+				</span>
+			</td>
+		</tr>
+		<tr class="separator"><td colspan="3"></td></tr>
+		<tr class="tax">
+			<td></td>
+			<td>Tax</td>
+			<td> $12.13 </td>
+		</tr>
+		<tr class="total lead">
+			<td></td>
+			<td>Total</td>
+			<td> {{ transaction.total | currency }} </td>
+		</tr>
+	</tbody>
+</table>

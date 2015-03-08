@@ -28,6 +28,14 @@ pos.config(['$routeProvider',
             templateUrl: 'templates/pos.html',
             controller: 'posController',
           }).
+          when('/transactions', {
+            templateUrl: 'templates/transactions.html',
+            controller: 'transactionsController',
+          }).
+          when('/transaction/:transactionId', {
+            templateUrl: 'templates/view-transaction.html',
+            controller: 'viewTransactionController',
+          }).
           otherwise({
             redirectTo: '/'
           });
@@ -102,7 +110,7 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
     this.getOne = function (transactionId) {
         var url = transactionApiUrl + transactionId;
 
-        return $http.put(url).then(function (res) {
+        return $http.get(url).then(function (res) {
           return res.data;
         });
     };
@@ -400,5 +408,23 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   
   };
+
+});
+
+pos.controller('transactionsController', function ($scope, $location, Transactions) {
+    
+  Transactions.getAll().then(function (transactions) {
+    $scope.transactions = angular.copy(transactions);
+  });
+
+});
+
+pos.controller('viewTransactionController', function ($scope, $routeParams, Transactions) {
+  
+  var transactionId = $routeParams.transactionId;
+
+  Transactions.getOne(transactionId).then(function (transaction) {
+    $scope.transaction = angular.copy(transaction);
+  });
 
 });
