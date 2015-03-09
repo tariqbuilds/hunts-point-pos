@@ -315,6 +315,12 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 // POS Section
 pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
 
+  var rawCart = {
+    products: [],
+    total: 0,
+    total_tax: 0,
+  };
+
   var startCart = function () {
     var cartJSON = localStorage.getItem('cart');
 
@@ -322,22 +328,15 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
       $scope.cart = JSON.parse(cartJSON);
     }
     else {
-      $scope.cart = {
-          products: [],
-          total: 0,
-        };
+      $scope.cart = angular.copy(rawCart);
     }
 
-    console.log(cartJSON);
   };
 
   var startFreshCart = function () {
       localStorage.removeItem('cart');
-      $scope.cart = {
-        products: [],
-        total: 0,
-      };
-
+      $scope.cart = angular.copy(rawCart);
+      $scope.updateCartTotals();
       $('#barcode').focus();
   };
 
@@ -354,7 +353,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   
   var addProductAndUpdateCart = function (product) {
     $scope.cart.products = $scope.cart.products.concat([product]);
-    $scope.updateCartTotal();
+    $scope.updateCartTotals();
     $scope.barcode = '';
   };
 
@@ -383,7 +382,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   $scope.removeProductFromCart = function (productIndex) {
     $scope.cart.products.remove(productIndex);
-    $scope.updateCartTotal();
+    $scope.updateCartTotals();
   };
 
   $scope.isValidProduct = function (barcode) {
@@ -395,7 +394,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     localStorage.setItem('cart', cartJSON);
   };
 
-  $scope.updateCartTotal = function () {
+  $scope.updateCartTotals = function () {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
       var weightedPrice = parseFloat( product.price * product.quantity );
       var weightedTax = parseFloat( weightedPrice * product.tax_percent );
