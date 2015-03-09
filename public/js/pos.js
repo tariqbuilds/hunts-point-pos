@@ -331,6 +331,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   var startFreshCart = function () {
+      localStorage.setItem('cart', null);
       $scope.cart = {
         products: [],
         total: 0,
