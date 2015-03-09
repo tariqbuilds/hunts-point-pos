@@ -328,10 +328,11 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
         };
     }
 
+    console.log(cartJSON);
   };
 
   var startFreshCart = function () {
-      localStorage.setItem('cart', null);
+      localStorage.removeItem('cart');
       $scope.cart = {
         products: [],
         total: 0,
