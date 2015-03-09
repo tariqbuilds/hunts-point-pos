@@ -12,3 +12,32 @@ body {
  legend {
  	margin-top: 40px;
  }
+
+table.receipt {
+	float: none;
+	margin: 0 auto;
+	width: 400px;
+	border: 1px solid black;
+	background-color: #efefef;
+}
+
+table.receipt thead tr th {
+	padding: 20px;
+}
+
+table.receipt tbody tr td {
+	text-align: center;
+}
+
+table.receipt tr.separator {
+	border-bottom: 1px solid black;
+}
+
+table.receipt td {
+	padding: 25px;
+}
+
+table.receipt tbody tr td {
+	padding: 10px;
+	margin-bottom: 30px;
+}

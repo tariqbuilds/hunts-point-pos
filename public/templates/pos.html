@@ -1,15 +1,13 @@
 <h3 class="text-center"><a href="#/pos">POS</a></h3>
 
 <!-- Update Inventory -->
-<button class="btn btn-info" ng-click="refreshInventory()">
+<button class="btn btn-info btn-xs" ng-click="refreshInventory()">
 	<i class="glyphicon glyphicon-refresh"></i> Inventory
 </button>
 <small>Last Updated: {{ inventoryLastUpdated | date: 'short' }}</small>
 <!-- Update Inventory -->
 
 <div class="pull-right">
-	Total: <span class="text-success">{{ cart.total | currency }}</span>
-	<checkout cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 </div>
 
 <br/><br/>
@@ -18,22 +16,29 @@
 <table class="col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
-			<td colspan="5">
+			<td colspan="6">
 				<!-- Barcode Input -->
 				<barcode-scanner class="col-md-8" validate-product="isValidProduct(barcode)" add-product="addProductToCart(barcode)"></barcode-scanner>
 				<!-- Barcode Input -->
 				
-				Or
-				
 				<!-- Manual Item Button -->
-				<add-manual-item class="col-md-2 pull-right" add-item="addManualItem(item)"></add-manual-item>
+				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
 				<!-- Manual Item Button -->
+			</td>
+		</tr>
+		<tr>
+			<td colspan="6" class="text-center">
+				<span class="lead pull-left">Tax: <span class="text-success">{{ cart.total_tax | currency }}</span> </span>
+
+				<span class="lead">Total: <span class="text-success">{{ cart.total | currency }}</span> </span>			
+				<checkout class="pull-right" cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 			</td>
 		</tr>
 		<tr>
 			<th>Name</th>
 			<th>Price</th>
 			<th>Quantity</th>
+			<th>Tax</th>
 			<th>Total</th>
 			<th></th>
 		</tr>
@@ -43,10 +48,11 @@
 			<td class="col-md-2"> {{ product.name }} </td>
 			<td class="col-md-2"> {{ product.price | currency }} </td>
 			<td class="col-md-2"> 
-				<div class="col-md-10">
+				<div class="col-md-8">
 					<input type="number" step="1" min="1" class="form-control" ng-model="product.quantity" ng-change="updateCartTotal()" /> 
 				</div>	
 			</td>
+			<td class="col-md-2"> {{ product.tax_percent * product.quantity * product.price | currency }} </td>
 			<td class="col-md-2">
 				{{ product.price * product.quantity | currency }}
 			</td>
@@ -57,7 +63,7 @@
 			</td>
 		</tr>
 		<tr ng-if="!cart.products.length">
-			<td colspan="5">Scan products or add unlisted item above.</td>
+			<td colspan="6">Scan products or add unlisted item above.</td>
 		</tr>
 	</tbody>	
 </table>

@@ -1,37 +1,7 @@
-<h3 class="text-center">POS</h3>
+<a href=""><h3 class="text-center">Transactions</h3></a>
+<h4 class="text-center">View Receipt</h4>
 
 <br/><br/>
-
-<style>
-	table.receipt {
-		float: none;
-		margin: 0 auto;
-		width: 300px;
-		border: 1px solid black;
-		background-color: #efefef;
-	}
-
-	table.receipt thead tr th {
-		padding: 20px;
-	}
-
-	table.receipt tbody tr td {
-		text-align: center;
-	}
-
-	table.receipt tr.separator {
-		border-bottom: 1px dashed black;
-	}
-
-	table.receipt td {
-		padding: 25px;
-	}
-
-	table.receipt tbody tr td {
-		padding: 10px;
-		margin-bottom: 30px;
-	}
-</style>
 
 <table class="receipt">
 	<thead>
@@ -44,6 +14,11 @@
 			<td colspan="3"> 
 				<small>{{ transaction.date | date:'medium' }}</small>
 			</td>
+		</tr>
+		<tr class="small">
+			<td> Product </td>
+			<td> Quantity </td>
+			<td> Price </td>
 		</tr>
 		<tr ng-repeat="product in transaction.products">
 			<td> {{ product.name }} </td>
@@ -64,7 +39,7 @@
 		<tr class="tax">
 			<td></td>
 			<td>Tax</td>
-			<td> $12.13 </td>
+			<td> {{ transaction.total_tax | currency }} </td>
 		</tr>
 		<tr class="total lead">
 			<td></td>

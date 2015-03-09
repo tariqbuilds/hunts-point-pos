@@ -214,6 +214,12 @@ pos.directive('checkout',function () {
     templateUrl: 'templates/directives/checkout.html',
     link: function (scope, el) {
       
+      $paymentField = el.find('form').eq(0).find('input').eq(0);
+      
+      scope.focusPayment = function () {
+        $('#checkoutPaymentAmount').focus();
+      };
+      
       scope.getChangeDue = function () {
         if (scope.paymentAmount && scope.paymentAmount > scope.cartTotal) {
           var change =  parseFloat(scope.paymentAmount) - parseFloat(scope.cartTotal);
@@ -353,6 +359,10 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   $scope.getCleanedProduct = function (barcode) {
     var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
     product.cart_item_id = $scope.cart.products.length + 1;
+
+    if (product.food) product.tax_percent = 0;
+    else product.tax_percent = .08 ;
+
     delete product.quantity_on_hand;
     delete product.food;
     return product;
@@ -380,13 +390,21 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   var updateCartInLocalStorage = function () {
     var cartJSON = JSON.stringify($scope.cart);
-    console.log(cartJSON);
     localStorage.setItem('cart', cartJSON);
   };
 
   $scope.updateCartTotal = function () {
     $scope.cart.total = _.reduce($scope.cart.products, function (total, product) {
-      return total + ( parseFloat(product.price * product.quantity) );
+      var weightedPrice = parseFloat( product.price * product.quantity );
+      var weightedTax = parseFloat( weightedPrice * product.tax_percent );
+      var weightedPricePlusTax = weightedPrice + weightedTax;
+      return total + weightedPricePlusTax;
+    }, 0);
+
+    $scope.cart.total_tax = _.reduce($scope.cart.products, function (total, product) {
+      var weightedPrice = parseFloat( product.price * product.quantity );
+      var weightedTax = parseFloat( weightedPrice * product.tax_percent );
+      return total + weightedTax;
     }, 0);
 
     updateCartInLocalStorage();
