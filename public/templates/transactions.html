@@ -14,7 +14,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="transaction in transactions track by $index">
-			<td class="col-md-2"> {{ transaction.date | date:'medium' }} </td>
+			<td class="col-md-2"> {{ transaction.date | date:'short' }} </td>
 			<td class="col-md-2"> {{ transaction.total | currency }} </td>
 			<td class="col-md-2"> {{ transaction.payment | currency }}</td>
 			<td class="col-md-2"> {{ transaction.products.length }} </td>
