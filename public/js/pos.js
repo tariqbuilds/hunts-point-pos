@@ -238,7 +238,7 @@ pos.directive('checkout',function () {
           total: angular.copy(scope.cartTotal),
           paymentAmount: paymentAmount,
         };
-        
+
         scope.printReceipt({ payment: paymentAmount });
         scope.transactionComplete = true;
       };
@@ -435,7 +435,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
       
     });
 
-  
+    $scope.refreshInventory();
   };
 
 });
