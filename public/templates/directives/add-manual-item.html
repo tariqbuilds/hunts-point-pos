@@ -26,6 +26,17 @@
 
     			<p class="text-danger" ng-show="addManualItemForm.price.$error.required">Enter price for item.</p>
 
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="food">Is it food?</label>  
+            <div class="col-md-4">
+              <input 
+                name="food" 
+                class="form-control"
+                type="checkbox"
+                ng-model="manualItem.food"> 
+            </div>
+          </div>
+          
     		</form>
 
       </div>

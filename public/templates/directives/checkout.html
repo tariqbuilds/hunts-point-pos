@@ -26,34 +26,40 @@
       </div>
       <div class="modal-body">
         
-        <div class="lead" ng-if="checkoutForm.payment">
+        <div ng-hide="transactionComplete" class="lead">
           <h3>Total: <span class="text-danger">{{ cartTotal | currency }}</span></h3>
           <h3>Change Due: <span class="text-success">{{ getChangeDue() | currency }}</span></h3>
+        
+          <form class="form-horizontal" name="checkoutForm" ng-submit="checkoutForm.$valid && print()">
+
+            <div class="form-group" ng-class="{ 'has-error': checkoutForm.payment.$error.required }">
+              <div class="input-group">
+                <div class="input-group-addon">$</div>
+                <input type="number" 
+                  id="checkoutPaymentAmount" 
+                  class="form-control input-lg" 
+                  name="payment" 
+                  step="any" 
+                  min="0" 
+                  ng-model="paymentAmount" 
+                  required/>
+              </div>
+            </div>  
+
+            <p class="text-danger" ng-show="checkoutForm.payment.$error.required && checkoutForm.$dirty">Enter payment amount.</p>
+
+            <button type="submit" class="btn btn-primary btn-lg lead" ng-disabled="checkoutForm.payment.$error && paymentAmount < cartTotal">
+              Print Receipt
+            </button>
+
+          </form>
         </div>
 
-        <form class="form-horizontal" name="checkoutForm" ng-submit="checkoutForm.$valid && print()">
-
-          <div class="form-group" ng-class="{ 'has-error': checkoutForm.payment.$error.required }">
-            <div class="input-group">
-              <div class="input-group-addon">$</div>
-              <input type="number" 
-                id="checkoutPaymentAmount" 
-                class="form-control input-lg" 
-                name="payment" 
-                step="any" 
-                min="0" 
-                ng-model="paymentAmount" 
-                required/>
-            </div>
-          </div>  
-
-          <p class="text-danger" ng-show="checkoutForm.payment.$error.required && checkoutForm.$dirty">Enter payment amount.</p>
-
-          <button type="submit" class="btn btn-primary btn-lg lead" ng-disabled="checkoutForm.payment.$error && paymentAmount < cartTotal">
-            Print Receipt
-          </button>
-
-        </form>
+        <div ng-show="transactionComplete" class="lead" ng-if="checkoutForm.payment">
+          <h3>Total: <span class="text-danger">{{ previousCartInfo.total | currency }}</span></h3>
+          <h3>Change Due: <span class="text-success">{{ previousCartInfo.paymentAmount - previousCartInfo.total | currency }}</span></h3>
+          <button ng-click="closeModal()" class="btn btn-default btn-lg" type="button">Close</button>
+        </div>
 
       </div>
     </div>

@@ -86,9 +86,16 @@ app.decrementInventory = function (products) {
 		
 		inventoryDB.findOne({_id: transactionProduct._id }, function (err, product) {
 			
-			var updatedQuantity = parseInt(product.quantity_on_hand) - parseInt(transactionProduct.quantity)
+			// catch manually added items (don't exist in inventory)
+			if (!product || !product.quantity_on_hand) {
+				callback();
+			}
 
-			inventoryDB.update({ _id: product._id }, { $set: { quantity_on_hand: updatedQuantity } }, {}, callback)
+			else {
+				var updatedQuantity = parseInt(product.quantity_on_hand) - parseInt(transactionProduct.quantity)
+				
+				inventoryDB.update({ _id: product._id }, { $set: { quantity_on_hand: updatedQuantity } }, {}, callback)
+			}
 
 		});
 

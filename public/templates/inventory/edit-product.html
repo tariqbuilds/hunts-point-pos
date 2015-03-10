@@ -2,10 +2,11 @@
 
 <legend class="text-center">
 	Edit Product
-	<button class="btn btn-danger btn-xs pull-right" ng-click="deleteProduct()">
-		<i class="glyphicon glyphicon-remove"></i>
-		Product
-	</button>
 </legend>
+
+<button class="btn btn-danger btn-xs pull-right" ng-click="deleteProduct()">
+	<i class="glyphicon glyphicon-remove"></i>
+	Product
+</button>
 
 <product-form product="product" on-save="saveProduct(product)"></product-form>

@@ -49,12 +49,14 @@
 			<td class="col-md-2"> {{ product.price | currency }} </td>
 			<td class="col-md-2"> 
 				<div class="col-md-8">
-					<input type="number" step="1" min="1" class="form-control" ng-model="product.quantity" ng-change="updateCartTotal()" /> 
+					<input type="number" step="1" min="1" class="form-control" ng-model="product.quantity" ng-change="updateCartTotals()" /> 
 				</div>	
 			</td>
-			<td class="col-md-2"> {{ product.tax_percent * product.quantity * product.price | currency }} </td>
+			<td class="col-md-2"> 
+				{{  product.tax_percent * product.quantity * product.price | currency }} 
+			</td>
 			<td class="col-md-2">
-				{{ product.price * product.quantity | currency }}
+				{{ (product.tax_percent * product.quantity * product.price) + ( product.price * product.quantity) | currency }}
 			</td>
 			<td class="col-md-2">
 				<button class="btn btn-danger" ng-click="removeProductFromCart($index)">

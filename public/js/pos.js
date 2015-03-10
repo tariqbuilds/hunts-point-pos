@@ -233,8 +233,17 @@ pos.directive('checkout',function () {
         if (scope.cartTotal > scope.paymentAmount) return;
 
         var paymentAmount = angular.copy(scope.paymentAmount);
-        scope.printReceipt({ payment: paymentAmount });
 
+        scope.previousCartInfo = {
+          total: angular.copy(scope.cartTotal),
+          paymentAmount: paymentAmount,
+        };
+        
+        scope.printReceipt({ payment: paymentAmount });
+        scope.transactionComplete = true;
+      };
+
+      scope.closeModal = function () {
         el.find('div').eq(0).modal('hide');
         delete scope.paymentAmount;
       };
@@ -357,8 +366,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     $scope.barcode = '';
   };
 
-  $scope.getCleanedProduct = function (barcode) {
-    var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
+  $scope.cleanProduct = function (product) {
     product.cart_item_id = $scope.cart.products.length + 1;
 
     if (product.food) product.tax_percent = 0;
@@ -370,13 +378,15 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   };
 
   $scope.addProductToCart = function (barcode) {
-    var product = $scope.getCleanedProduct(barcode);
+    var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
+    product = $scope.cleanProduct(product);
     product.quantity = 1;
     addProductAndUpdateCart(product);
   };
 
   $scope.addManualItem = function (product) {
     product.quantity = 1;
+    product = $scope.cleanProduct(product)
     addProductAndUpdateCart(product);
   };
 
