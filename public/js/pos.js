@@ -375,11 +375,26 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     return product;
   };
 
+  var productAlreadyInCart = function (barcode) {
+    var product = _.find($scope.cart.products, { barcode: barcode.toString() });
+    
+    if (product) {
+      product.quantity = product.quantity + 1;
+      $scope.updateCartTotals();
+    }
+
+    return product;
+  };
+
   $scope.addProductToCart = function (barcode) {
-    var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
-    product = $scope.cleanProduct(product);
-    product.quantity = 1;
-    addProductAndUpdateCart(product);
+    
+    if (productAlreadyInCart(barcode)) return;
+    else {
+      var product = angular.copy(_.find($scope.inventory, { barcode: barcode.toString() }));
+      product = $scope.cleanProduct(product);
+      product.quantity = 1;
+      addProductAndUpdateCart(product);
+    }
   };
 
   $scope.addManualItem = function (product) {
@@ -441,8 +456,16 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 pos.controller('transactionsController', function ($scope, $location, Transactions) {
     
   Transactions.getAll().then(function (transactions) {
-    $scope.transactions = angular.copy(transactions);
+
+    $scope.transactions = _.sortBy(transactions, 'date').reverse();
+
   });
+
+  $scope.getNumberOfProducts = function (products) {
+    return _.reduce(products, function (s, product) {
+      return s + product.quantity;
+    }, 0);
+  };
 
 });
 

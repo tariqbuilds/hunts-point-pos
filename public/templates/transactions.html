@@ -13,11 +13,11 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="transaction in transactions track by $index">
+		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
 			<td class="col-md-2"> {{ transaction.date | date:'short' }} </td>
 			<td class="col-md-2"> {{ transaction.total | currency }} </td>
 			<td class="col-md-2"> {{ transaction.payment | currency }}</td>
-			<td class="col-md-2"> {{ transaction.products.length }} </td>
+			<td class="col-md-2"> {{ getNumberOfProducts(transaction.products) }} </td>
 			<td>
 				<a class="btn btn-warning" href="#/transaction/{{ transaction._id }}">
 					View Receipt
