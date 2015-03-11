@@ -4,7 +4,6 @@
 </div>
 
 <br/><br/>
-<br/><br/>
 
 <table class="col-md-12 table table-hover table-striped">
 	<thead>
@@ -37,9 +36,18 @@
 			<td class="col-md-2"> {{ product.name }} </td>
 			<td class="col-md-2"> {{ product.price | currency }} </td>
 			<td class="col-md-2"> 
-				<div class="col-md-8">
-					<input type="number" step="1" min="1" class="form-control" ng-model="product.quantity" ng-change="updateCartTotals()" /> 
-				</div>	
+
+				<button class="btn btn-sm col-md-3" ng-click="removeQuantity(product)">
+					<i class="glyphicon glyphicon-minus"></i>
+				</button>
+
+				<div class="col-md-3 text-center">
+				{{ product.quantity }}
+				</div>
+
+				<button class="btn btn-sm col-md-3" ng-click="addQuantity(product)">
+					<i class="glyphicon glyphicon-plus"></i>
+				</button>
 			</td>
 			<td class="col-md-2"> 
 				{{  product.tax_percent * product.quantity * product.price | currency }} 
