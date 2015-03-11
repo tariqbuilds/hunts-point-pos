@@ -159,30 +159,6 @@ pos.directive('productForm',function ($location) {
 
 });
 
-pos.directive('barcodeScanner',function ($location) {
-  return {
-    restrict: 'E',
-    scope: {
-      addProduct: '&',
-      validateProduct: '&',
-    },
-    templateUrl: 'templates/directives/barcode-scanner.html',
-    link: function (scope, el) {
-      
-      var $barcodeField = el.find('input');
-
-      $barcodeField.focus();
-      
-      scope.clearBarcode = function () {
-        $barcodeField.val('');
-        return true;
-      };
-
-    }
-  };
-
-});
-
 pos.directive('addManualItem',function () {
   return {
     restrict: 'E',
@@ -323,6 +299,28 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
 
 // POS Section
 pos.controller('posController', function ($scope, $location, Inventory, Transactions) {
+
+  $scope.barcode = '';
+
+  $(document).on('keypress', function (e) {
+      
+      $scope.barcodeNotFoundError = false;
+
+      // if enter is pressed
+      if (e.which === 13) {
+        
+        // if the barcode accumulated so far is valid, add product to cart
+        if ($scope.isValidProduct($scope.barcode)) $scope.addProductToCart($scope.barcode);
+        else $scope.barcodeNotFoundError = true;
+
+        $scope.barcode = '';
+        $scope.$digest();
+      } 
+      else {
+        $scope.barcode += String.fromCharCode(e.which);
+      }
+
+  });
 
   var rawCart = {
     products: [],
