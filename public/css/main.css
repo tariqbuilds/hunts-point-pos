@@ -41,3 +41,26 @@ table.receipt tbody tr td {
 	padding: 10px;
 	margin-bottom: 30px;
 }
+
+table.pos thead tr td {
+	border-top: none;
+}
+
+table.pos tbody tr td input {
+	border: none;
+	background: transparent;
+	width: 100%;
+	border-bottom: 1px dashed black;
+	text-align: center;
+}
+
+table.pos tbody tr td input:focus {
+	outline-color: transparent;	
+}
+
+table.pos tbody tr td input::-webkit-outer-spin-button,
+table.pos tbody tr td input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}

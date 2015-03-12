@@ -4,25 +4,20 @@
 </div>
 
 <br/><br/>
+<br/><br/>
 
-<table class="col-md-12 table table-hover table-striped">
+<table class="pos col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
-			<td colspan="6">
-				<!-- Manual Item Button -->
-				<add-manual-item class="col-md-2" add-item="addManualItem(item)"></add-manual-item>
-				<!-- Manual Item Button -->
-			</td>
-		</tr>
-		<tr>
 			<td colspan="6" class="text-center">
-				<span class="lead pull-left">Tax: <span class="text-success">{{ cart.total_tax | currency }}</span> </span>
+				<!-- Manual Item Button -->
+				<add-manual-item class="pull-left" add-item="addManualItem(item)"></add-manual-item>
+				<!-- Manual Item Button -->
 
-				<span class="lead">Total: <span class="text-success">{{ cart.total | currency }}</span> </span>			
 				<checkout class="pull-right" cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 			</td>
 		</tr>
-		<tr>
+		<tr class="titles">
 			<th>Name</th>
 			<th>Price</th>
 			<th>Quantity</th>
@@ -30,24 +25,38 @@
 			<th>Total</th>
 			<th></th>
 		</tr>
+		<tr>
+			<td colspan="3"></td>
+			<td class="lead text-success">{{ cart.total_tax | currency }}</td>
+			<td class="lead text-success">{{ cart.total | currency }}</td>
+			<td></td>
+		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="product in cart.products track by $index">
 			<td class="col-md-2"> {{ product.name }} </td>
-			<td class="col-md-2"> {{ product.price | currency }} </td>
+			<td class="col-md-1"> {{ product.price | currency }} </td>
 			<td class="col-md-2"> 
 
-				<button class="btn btn-sm col-md-3" ng-click="removeQuantity(product)">
+				<button class="btn btn-sm pull-left" ng-click="removeQuantity(product)">
 					<i class="glyphicon glyphicon-minus"></i>
 				</button>
 
-				<div class="col-md-3 text-center">
-				{{ product.quantity }}
+				<div class="col-md-6">
+					<input 
+						type="number"
+						class=""
+						step="1"
+						min="1"
+						ng-model="product.quantity"
+						ng-change="updateCartTotals()"
+						required/>
 				</div>
 
-				<button class="btn btn-sm col-md-3" ng-click="addQuantity(product)">
+				<button class="btn btn-sm pull-right" ng-click="addQuantity(product)">
 					<i class="glyphicon glyphicon-plus"></i>
 				</button>
+
 			</td>
 			<td class="col-md-2"> 
 				{{  product.tax_percent * product.quantity * product.price | currency }} 
