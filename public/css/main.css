@@ -64,3 +64,8 @@ table.pos tbody tr td input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+
+h4.current-page {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}

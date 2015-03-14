@@ -4,6 +4,8 @@ var pos = angular.module('POS', ['ngRoute']);
 ////////////////// Controllers ////////////////// //
 ////////////////////////////////////////////////////
 
+var socket = io.connect('http://pos.dev');
+
 pos.controller('body', function ($scope) {
 });
 
@@ -190,6 +192,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
   var updateCartInLocalStorage = function () {
     var cartJSON = JSON.stringify($scope.cart);
     localStorage.setItem('cart', cartJSON);
+    socket.emit('update-live-cart', $scope.cart);
   };
 
   $scope.updateCartTotals = function () {
@@ -243,9 +246,7 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 pos.controller('transactionsController', function ($scope, $location, Transactions) {
     
   Transactions.getAll().then(function (transactions) {
-
     $scope.transactions = _.sortBy(transactions, 'date').reverse();
-
   });
 
   $scope.getNumberOfProducts = function (products) {
@@ -262,6 +263,16 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
 
   Transactions.getOne(transactionId).then(function (transaction) {
     $scope.transaction = angular.copy(transaction);
+  });
+
+});
+
+pos.controller('liveCartController', function ($scope) {
+  
+  socket.on('update-live-cart-display', function (liveCart) {
+    console.log('updated cart');
+    $scope.liveCart = angular.copy(liveCart);
+    $scope.$digest();
   });
 
 });

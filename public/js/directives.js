@@ -104,3 +104,14 @@ pos.directive('checkout',function () {
   };
 
 });
+
+pos.directive('receipt',function () {
+  return {
+    restrict: 'E',
+    scope: {
+      transaction: '='
+    },
+    templateUrl: 'templates/directives/receipt.html',
+  };
+
+});

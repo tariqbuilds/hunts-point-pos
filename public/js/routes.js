@@ -26,6 +26,10 @@ pos.config(['$routeProvider',
           templateUrl: 'templates/pos.html',
           controller: 'posController',
         }).
+        when('/live-cart', {
+          templateUrl: 'templates/live-cart.html',
+          controller: 'liveCartController',
+        }).
         when('/transactions', {
           templateUrl: 'templates/transactions.html',
           controller: 'transactionsController',
