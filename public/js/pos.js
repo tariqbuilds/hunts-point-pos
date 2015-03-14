@@ -4,7 +4,14 @@ var pos = angular.module('POS', ['ngRoute']);
 ////////////////// Controllers ////////////////// //
 ////////////////////////////////////////////////////
 
-var socket = io.connect('http://pos.afaqtariq.com');
+var serverAddress;
+
+if (window.location.host === 'pos.dev')
+  serverAddress = 'http://pos.afaqtariq.com:8080';
+else
+  serverAddress = 'http://pos.dev'
+
+var socket = io.connect(serverAddress);
 
 pos.controller('body', function ($scope) {
 });

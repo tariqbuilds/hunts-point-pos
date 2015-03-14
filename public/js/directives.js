@@ -67,9 +67,7 @@ pos.directive('checkout',function () {
       $paymentField = el.find('form').eq(0).find('input').eq(0);
       
       scope.focusPayment = function () {
-        console.log($paymentField.select());
         $('#checkoutPaymentAmount').select();
-
       };
       
       scope.getChangeDue = function () {
@@ -98,6 +96,7 @@ pos.directive('checkout',function () {
       scope.closeModal = function () {
         el.find('div').eq(0).modal('hide');
         delete scope.paymentAmount;
+        scope.transactionComplete = false;
       };
 
     }
