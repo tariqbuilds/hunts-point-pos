@@ -16,7 +16,7 @@ body {
 table.receipt {
 	float: none;
 	margin: 0 auto;
-	width: 400px;
+	max-width: 400px;
 	border: 1px solid black;
 	background-color: #efefef;
 }
