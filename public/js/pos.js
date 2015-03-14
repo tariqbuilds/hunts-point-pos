@@ -7,9 +7,9 @@ var pos = angular.module('POS', ['ngRoute']);
 var serverAddress;
 
 if (window.location.host === 'pos.dev')
-  serverAddress = 'http://pos.afaqtariq.com:8080';
-else
   serverAddress = 'http://pos.dev'
+else
+  serverAddress = 'http://pos.afaqtariq.com:8080';
 
 var socket = io.connect(serverAddress);
 
