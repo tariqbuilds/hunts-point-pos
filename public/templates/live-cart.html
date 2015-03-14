@@ -2,9 +2,9 @@
 
 <h4 class="text-center current-page">Live Cart</h4>
 
-<receipt ng-show="liveCart" transaction="liveCart"></receipt>
+<receipt ng-show="liveCart.products.length" transaction="liveCart"></receipt>
 
-<div ng-hide="liveCart" class="col-md-6" style="margin: 0 auto; float: none;">
+<div ng-hide="liveCart.products.length" class="col-md-6" style="margin: 0 auto; float: none;">
 	<div class="alert alert-warning text-center" role="alert">
 	  <strong>Inactive</strong> No items added at the current moment.
 	</div>
