@@ -4,7 +4,7 @@ var pos = angular.module('POS', ['ngRoute']);
 ////////////////// Controllers ////////////////// //
 ////////////////////////////////////////////////////
 
-var socket = io.connect('http://pos.dev');
+var socket = io.connect('http://pos.afaqtariq.com');
 
 pos.controller('body', function ($scope) {
 });
