@@ -292,7 +292,7 @@ pos.controller('liveCartController', function ($scope, Transactions, Settings) {
   $scope.recentTransactions = [];
   
   var getRecentTransactions = function () {
-    Transactions.getAll().then(function (transactions) {
+    Transactions.get(10).then(function (transactions) {
       $scope.recentTransactions = _.sortBy(transactions, 'date').reverse();
     });
   };

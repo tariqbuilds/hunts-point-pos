@@ -63,6 +63,14 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
         });
     };
 
+    this.get = function (limit) {
+        var url = transactionApiUrl + 'limit';
+
+        return $http.get(url, { params: { limit: limit } }).then(function (res) {
+          return res.data;
+        });
+    };
+
     this.getOne = function (transactionId) {
         var url = transactionApiUrl + transactionId;
 

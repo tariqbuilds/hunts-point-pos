@@ -26,7 +26,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="transaction in recentTransactions | limitTo: 5">
+			<tr ng-repeat="transaction in recentTransactions">
 				<td class="col-md-2"> 
 					<a href="#/transaction/{{ transaction._id }}">{{ transaction.date | date:'short' }}</a>
 				</td>

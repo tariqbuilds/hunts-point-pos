@@ -27,6 +27,17 @@ app.get('/all', function (req, res) {
 	})
 })
 
+// GET all transactions
+app.get('/limit', function (req, res) {
+
+	var limit = parseInt(req.query.limit, 10)
+	if (!limit) limit = 5
+
+	Transactions.find({}).limit(limit).exec(function (err, docs) {
+	  res.send(docs)
+	})
+})
+
 // GET single transaction
 app.get('/:transactionId', function (req, res) {
 
