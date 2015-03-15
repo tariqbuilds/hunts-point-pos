@@ -33,7 +33,7 @@ app.get('/limit', function (req, res) {
 	var limit = parseInt(req.query.limit, 10)
 	if (!limit) limit = 5
 
-	Transactions.find({}).limit(limit).exec(function (err, docs) {
+	Transactions.find({}).limit(limit).sort({ date: -1 }).exec(function (err, docs) {
 	  res.send(docs)
 	})
 })
