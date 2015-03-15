@@ -21,8 +21,13 @@ table.receipt {
 	background-color: #efefef;
 }
 
-table.receipt thead tr th {
-	padding: 20px;
+table.receipt thead tr:first-child th {
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+table.receipt thead tr:last-child td{
+	padding-bottom: 30px;
 }
 
 table.receipt tbody tr td {
@@ -33,7 +38,7 @@ table.receipt tr.separator {
 	border-bottom: 1px solid black;
 }
 
-table.receipt td {
+table.receipt tbody td {
 	padding: 25px;
 }
 

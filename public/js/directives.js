@@ -54,7 +54,7 @@ pos.directive('addManualItem',function () {
 
 });
 
-pos.directive('checkout',function () {
+pos.directive('checkout', function (Settings) {
   return {
     restrict: 'E',
     scope: {
@@ -104,13 +104,20 @@ pos.directive('checkout',function () {
 
 });
 
-pos.directive('receipt',function () {
+pos.directive('receipt',function (Settings) {
   return {
     restrict: 'E',
     scope: {
       transaction: '='
     },
     templateUrl: 'templates/directives/receipt.html',
+    link: function (scope) {
+
+      Settings.get().then(function (settings) {
+        scope.settings = settings;
+      });
+      
+    }
   };
 
 });

@@ -7,9 +7,8 @@ module.exports = app;
 
 // print data of server
 app.get('/', function (req, res) {
-	res.send('Hunts Point POS. Version 0.0');
+	res.send('Hunts Point POS.');
 });
 
 app.use('/inventory', require('./inventory'));
-
 app.use('/transactions', require('./transactions'));

@@ -79,14 +79,14 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
 
 }]);
 
-pos.service('LiveCart', ['$http', function ($http, Inventory) {
+pos.service('Settings', ['$http', function ($http) {
 
-    var liveCartApi = '/api/live-cart';
+    var settingsFile = 'settings.json';
 
-    this.update = function (cart) {
-        return $http.post(liveCartApi, cart).then(function (res) {
-          return res.data;
-        });
-    };
+    this.get = function () {
+      return $http.get(settingsFile).then(function (res) {
+        return res.data;
+      });
+    }
 
 }]);

@@ -1,11 +1,38 @@
-<h3 class="text-center"><a href="#/pos">POS</a></h3>
+<h3 class="text-center current-page">Live Cart</h3>
 
-<h4 class="text-center current-page">Live Cart</h4>
+<div class="col-md-5 pull-right">
 
-<receipt ng-show="liveCart.products.length" transaction="liveCart"></receipt>
+	<receipt 
+		ng-show="liveCart.products.length" 
+		transaction="liveCart">
+	</receipt>
 
-<div ng-hide="liveCart.products.length" class="col-md-6" style="margin: 0 auto; float: none;">
-	<div class="alert alert-warning text-center" role="alert">
-	  <strong>Inactive</strong> No items added at the current moment.
+	<div ng-hide="liveCart.products.length" style="margin: 0 auto; float: none;">
+		<div class="alert alert-warning text-center" role="alert">
+		  <strong>Inactive</strong> No items added at the current moment.
+		</div>
 	</div>
+
+</div>
+
+<div class="col-md-5 pull-left well">
+	
+	<div class="lead text-center">Recent Transactions</div>
+	<table class="table table-hover table-brdered">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="transaction in recentTransactions | limitTo: 5">
+				<td class="col-md-2"> 
+					<a href="#/transaction/{{ transaction._id }}">{{ transaction.date | date:'short' }}</a>
+				</td>
+				<td class="col-md-2"> {{ transaction.total | currency }} </td>
+			</tr>
+		</tbody>
+	</table>
+
 </div>

@@ -1,8 +1,9 @@
 var pos = angular.module('POS', ['ngRoute']);
 
-/////////////////////////////////////////////////////
-////////////////// Controllers ////////////////// //
-////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+////////////////// Socket.io ////////////////// //
+//////////////////////////////////////////////////
 
 var serverAddress;
 
@@ -13,7 +14,17 @@ else
 
 var socket = io.connect(serverAddress);
 
-pos.controller('body', function ($scope) {
+
+/////////////////////////////////////////////////////
+////////////////// Controllers ////////////////// //
+////////////////////////////////////////////////////
+
+pos.controller('body', function ($scope, Settings) {
+  
+  Settings.get().then(function (settings) {
+    $scope.settings = settings;
+  });
+
 });
 
 // Inventory Section
@@ -228,6 +239,8 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
     // save to database
     Transactions.add(cart).then(function (res) {
 
+      socket.emit('cart-transaction-complete', {});
+
       // clear cart and start fresh
       startFreshCart();
       
@@ -274,11 +287,24 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
 
 });
 
-pos.controller('liveCartController', function ($scope) {
+pos.controller('liveCartController', function ($scope, Transactions, Settings) {
   
+  $scope.recentTransactions = [];
+  
+  var getRecentTransactions = function () {
+    Transactions.getAll().then(function (transactions) {
+      $scope.recentTransactions = _.sortBy(transactions, 'date').reverse();
+    });
+  };
+
+  // tell the server the page was loaded.
+  // the server will them emit update-live-cart-display
+  socket.emit('live-cart-page-loaded', { forreal: true });
+
+  // update the live cart and recent transactions
   socket.on('update-live-cart-display', function (liveCart) {
-    console.log('updated cart');
-    $scope.liveCart = angular.copy(liveCart);
+    $scope.liveCart = liveCart;
+    getRecentTransactions();
     $scope.$digest();
   });
 
