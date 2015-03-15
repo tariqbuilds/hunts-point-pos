@@ -71,10 +71,11 @@ pos.service('Transactions', ['$http', function ($http, Inventory) {
         });
     };
 
-    this.getTotalForDay = function () {
+    this.getTotalForDay = function (date) {
+
         var url = transactionApiUrl + 'day-total';
 
-        return $http.get(url).then(function (res) {
+        return $http.get(url, { params: { date: date } }).then(function (res) {
           return res.data;
         });
     };

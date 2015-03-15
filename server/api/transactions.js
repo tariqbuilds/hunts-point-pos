@@ -3,7 +3,7 @@ var server 	= require('http').Server(app)
 var bodyParser = require('body-parser')
 var Datastore = require('nedb')
 
-var Inventory = require('./inventory');
+var Inventory = require('./inventory')
 
 app.use(bodyParser.json())
 
@@ -41,13 +41,25 @@ app.get('/limit', function (req, res) {
 // GET total sales for the current day
 app.get('/day-total', function (req, res) {
 
-	// beginning of current day
-	var startDate = new Date();
-	startDate.setHours(0,0,0,0);
+	// if date is provided
+	if (req.query.date) {
+		startDate = new Date(req.query.date)
+		startDate.setHours(0,0,0,0)
 
-	// end of current day
-	var endDate = new Date();
-	endDate.setHours(23,59,59,999);
+		endDate = new Date(req.query.date)
+		endDate.setHours(23,59,59,999)
+	}
+	else {
+
+		// beginning of current day
+		var startDate = new Date()
+		startDate.setHours(0,0,0,0)
+
+		// end of current day
+		var endDate = new Date()
+		endDate.setHours(23,59,59,999)	
+	}
+
 
 	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() } }, function (err, docs) {
 		
@@ -75,11 +87,11 @@ app.get('/day-total', function (req, res) {
 // GET transactions for date
 app.get('/by-date', function (req, res) {
 	
-	var startDate = new Date(2015, 2, 15);
-	startDate.setHours(0,0,0,0);
+	var startDate = new Date(2015, 2, 15)
+	startDate.setHours(0,0,0,0)
 
-	var endDate = new Date(2015, 2, 15);
-	endDate.setHours(23,59,59,999);
+	var endDate = new Date(2015, 2, 15)
+	endDate.setHours(23,59,59,999)
 
 	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() } }, function (err, docs) {
 		if (docs)

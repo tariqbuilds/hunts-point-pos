@@ -269,6 +269,18 @@ pos.controller('transactionsController', function ($scope, $location, Transactio
     $scope.transactions = _.sortBy(transactions, 'date').reverse();
   });
 
+  // get yesterday's date
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  Transactions.getTotalForDay().then(function (dayTotal) {
+    $scope.todayTotal = dayTotal.total;
+  });
+
+  Transactions.getTotalForDay(yesterday).then(function (dayTotal) {
+    $scope.yesterdayTotal = dayTotal.total;
+  });
+
   $scope.getNumberOfProducts = function (products) {
     return _.reduce(products, function (s, product) {
       return s + product.quantity;

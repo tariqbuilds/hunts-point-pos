@@ -99,9 +99,8 @@ ul.nav-menu li a {
 }
 
 ul.nav-menu li a.active {
-	color: #ecc;
+	opacity: .6;
 	font-style: italic;
-	text-decoration: none;
 }
 
 ul.nav-menu li a h3 {

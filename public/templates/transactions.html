@@ -1,4 +1,13 @@
 
+<ul class="list-group col-md-4">
+  <li class="list-group-item lead">
+  	Today's total <span class="pull-right">{{ todayTotal | currency }}</span>
+  </li>
+  <li class="list-group-item lead">
+  	Yesterday's total <span class="pull-right">{{ yesterdayTotal | currency }}</span>
+  </li>
+</ul>
+
 <table ng-if="transactions" class="col-md-12 table table-hover table-striped">
 	<thead>
 		<tr>
