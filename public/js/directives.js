@@ -2,6 +2,24 @@
 ////////////////// Directives ////////////////// //
 ////////////////////////////////////////////////////
 
+pos.directive('navMenu',function ($location) {
+  return {
+    restrict: 'E',
+    scope: {
+    },
+    templateUrl: 'templates/directives/nav-menu.html',
+    link: function (scope) {
+
+      scope.isActive = function (url) {
+        url = '/' + url;
+        return $location.path() === url;
+      }
+
+    }
+  };
+
+});
+
 pos.directive('productForm',function ($location) {
   return {
     restrict: 'E',

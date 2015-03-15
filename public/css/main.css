@@ -74,3 +74,34 @@ h4.current-page {
 	margin-top: 30px;
 	margin-bottom: 20px;
 }
+
+nav-menu {
+	float: none;
+	margin: 0 auto;
+	text-align: center;
+}
+
+ul.nav-menu {
+	margin-top: 35px;
+	margin-bottom: 35px;
+}
+
+ul.nav-menu li {
+	display: inline;
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+ul.nav-menu li a {
+	list-style-type: none;
+ 	display: inline;
+ 	text-decoration: underline;
+}
+
+ul.nav-menu li a.active {
+	color: #ecc;
+}
+
+ul.nav-menu li a h3 {
+	display: inline;
+}

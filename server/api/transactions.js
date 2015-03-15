@@ -38,12 +38,18 @@ app.get('/limit', function (req, res) {
 	})
 })
 
-// GET single transaction
-app.get('/:transactionId', function (req, res) {
+// GET transactions for date
+app.get('/by-date', function (req, res) {
+	
+	var startDate = new Date(2015, 2, 15);
+	startDate.setHours(0,0,0,0);
 
-	Transactions.find({ _id: req.params.transactionId }, function (err, doc) {
-		if (doc)
-			res.send(doc[0])
+	var endDate = new Date(2015, 2, 15);
+	endDate.setHours(23,59,59,999);
+
+	Transactions.find({ date: { $gte: startDate.toJSON(), $lte: endDate.toJSON() } }, function (err, docs) {
+		if (docs)
+			res.send(docs)
 	})
 })
 
@@ -61,3 +67,13 @@ app.post('/new', function (req, res) {
 		} 
 	})
 })
+
+// GET single transaction
+app.get('/:transactionId', function (req, res) {
+
+	Transactions.find({ _id: req.params.transactionId }, function (err, doc) {
+		if (doc)
+			res.send(doc[0])
+	})
+})
+
