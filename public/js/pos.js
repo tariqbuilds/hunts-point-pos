@@ -290,10 +290,14 @@ pos.controller('viewTransactionController', function ($scope, $routeParams, Tran
 pos.controller('liveCartController', function ($scope, Transactions, Settings) {
   
   $scope.recentTransactions = [];
-  
-  var getRecentTransactions = function () {
-    Transactions.get(10).then(function (transactions) {
+
+  var getTransactionsData = function () {
+    Transactions.get(5).then(function (transactions) {
       $scope.recentTransactions = _.sortBy(transactions, 'date').reverse();
+    });
+
+    Transactions.getTotalForDay().then(function (dayTotal) {
+      $scope.dayTotal = dayTotal.total;
     });
   };
 
@@ -304,7 +308,7 @@ pos.controller('liveCartController', function ($scope, Transactions, Settings) {
   // update the live cart and recent transactions
   socket.on('update-live-cart-display', function (liveCart) {
     $scope.liveCart = liveCart;
-    getRecentTransactions();
+    getTransactionsData();
     $scope.$digest();
   });
 

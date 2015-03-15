@@ -17,9 +17,18 @@
 
 	<div class="panel panel-primary">
 		
-		<div class="panel-heading lead">Recent Transactions</div>
+		<div class="panel-heading lead text-center">
+			Recent Transactions
+		</div>
 
 		<div class="panel-body">
+
+			<div class="lead text-center">
+				Today's Total: <span class="text-success">{{ dayTotal | currency }}</span>
+			</div>
+
+			<br/>
+			
 			<table class="table table-hover table-brdered">
 				<thead>
 					<tr>
