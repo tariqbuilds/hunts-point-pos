@@ -1,57 +1,62 @@
-<table class="receipt">
-  <thead>
-    <tr>
-      <th  colspan="3" class="text-center"> 
-        {{ settings.store_name }} 
-      </th>
-    </tr>
-    <tr>
-      <td colspan="3" class="text-center"> 
-        <small>{{ transaction.date | date:'medium' }}</small>
-      </td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="small">
-      <td> Quantity </td>
-      <td> Product </td>
-      <td> Price </td>
-    </tr>
-    <tr ng-repeat="product in transaction.products">
-      <td> {{ product.quantity }} </td>
-      <td> {{ product.name }} </td>
-      <td> 
-        <span ng-if="product.quantity > 1">
-          {{ ( product.price * product.quantity ) | currency }} 
-          <br/> 
-          <small>({{ product.price | currency }} each)</small>
-        </span> 
+<div class="col-md-5" style="margin: 0 auto; float: none;">
+  
+  <div class="panel panel-primary">
+    
+    <div class="panel-heading text-center lead">{{ transaction.date | date:'medium' }}</div>
+    
+    <table class="receipt table table-hover">
+        <thead>
+          <tr class="small">
+            <th> Quantity </th>
+            <th> Product </th>
+            <th> Price </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in transaction.products">
+            <td> {{ product.quantity }} </td>
+            <td> 
+              <a href="#/inventory/product/{{ product._id }}"> 
+                {{ product.name }} 
+              </a> 
+            </td>
+            <td> 
+              <span ng-if="product.quantity > 1">
+                {{ ( product.price * product.quantity ) | currency }} 
+                <br/> 
+              </span> 
+              <small class="small-text"><em>({{ product.price | currency }} each)</em></small>
 
-        <span ng-if="product.quantity === 1">
-          {{ product.price | currency }}
-        </span>
-      </td>
-    </tr>
-    <tr class="separator"><td colspan="3"></td></tr>
-    <tr class="tax">
-      <td></td>
-      <td>Tax</td>
-      <td> {{ transaction.total_tax | currency }} </td>
-    </tr>
-    <tr class="total">
-      <td></td>
-      <td>Total</td>
-      <td> {{ transaction.total | currency }} </td>
-    </tr>
-    <tr class="">
-      <td></td>
-      <td>Payment</td>
-      <td> {{ transaction.payment | currency }} </td>
-    </tr>
-    <tr class="lead">
-      <td></td>
-      <td>Change</td>
-      <td> {{ transaction.payment - transaction.total | currency }} </td>
-    </tr>
-  </tbody>
-</table>
+              <span ng-if="product.quantity === 1">
+                {{ product.price | currency }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td></td>
+            <td>Tax</td>
+            <td> {{ transaction.total_tax | currency }} </td>
+          </tr>
+          <tr class="total">
+            <td></td>
+            <td>Total</td>
+            <td> {{ transaction.total | currency }} </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Payment</td>
+            <td> {{ transaction.payment | currency }} </td>
+          </tr>
+          <tr class="lead">
+            <td></td>
+            <td>Change</td>
+            <td> {{ transaction.payment - transaction.total | currency }} </td>
+          </tr>
+        </tbody>
+
+      </table>
+  </div>
+</div>

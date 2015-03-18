@@ -2,9 +2,10 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Hunts Point POS</title>
-		<!-- <link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'> -->
+		<link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="/icono/dist/icono.min.css">
 	    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
+	    <!-- <link rel="stylesheet" href="/jquery.avgrund/style/avgrund.css"> -->
 	    <link rel="stylesheet" href="/css/main.css">
 	    <style>
 	    	* {
@@ -25,6 +26,7 @@
 
 		<script src="/jquery/dist/jquery.min.js"></script>
 	    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+	    <script src="/jquery.avgrund/jquery.avgrund.min.js"></script>
 		<script src="/angular/angular.min.js"></script>
 		<script src="/angular-route/angular-route.min.js"></script>
 		<script src="/lodash/lodash.min.js"></script>
@@ -40,6 +42,11 @@
 					barcode.focus();
 					barcode.select();
 				}
+	    		
+	    		$('#iamavgrund').avgrund({
+	    			showClose: true,
+				    template: $('#content')
+				});
 	    	};
 		</script>
 	</body>

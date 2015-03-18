@@ -11,8 +11,11 @@ pos.directive('navMenu',function ($location) {
     link: function (scope) {
 
       scope.isActive = function (url) {
+        if (url === 'transactions')
+          url = 'transaction';
+        
         url = '/' + url;
-        return $location.path() === url;
+        return $location.path().indexOf(url) !== -1;
       }
 
     }
