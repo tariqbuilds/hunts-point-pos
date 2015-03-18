@@ -21,15 +21,11 @@
               </a> 
             </td>
             <td> 
-              <span ng-if="product.quantity > 1">
+              <span>
                 {{ ( product.price * product.quantity ) | currency }} 
-                <br/> 
-              </span> 
-              <small class="small-text"><em>({{ product.price | currency }} each)</em></small>
-
-              <span ng-if="product.quantity === 1">
-                {{ product.price | currency }}
               </span>
+              <br/> 
+              <small class="small-text"><em>({{ product.price | currency }} each)</em></small>
             </td>
           </tr>
         </tbody>
