@@ -1,4 +1,27 @@
 body {
+	background-color: oldlace;
+}
+
+.not-home {
+	background-color: #ffffff;
+}
+
+.home-page .large-text {
+	margin-top: 6%;
+	font-size: 70px;
+}
+
+.home-page img {
+	max-height: 100px;
+}
+
+* {
+  font-family: 'Lato', sans-serif;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
 }
 
 .modal.fade {
@@ -13,19 +36,33 @@ legend {
 	margin-top: 40px;
 }
 
-table.receipt .small-text {
-	font-size: 12px;
+.table>tbody {
+	max-height: 800px;
+	overflow: scroll;
 }
 
-table.receipt tfoot td,
-table.receipt tbody td,
-table.receipt thead th {
-	text-align: center;
-	border-top: 1px solid #fef;
+.table>tbody>tr>td {
+	border: none;
 }
 
-table.pos thead tr td {
-	border-top: none;
+.table>tbody>tr>td:first-child,
+.table>thead>tr>th:first-child {
+	padding-left: 40px;
+}
+
+.table>tbody>tr>td,
+.table>thead>tr>th {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+table thead th {
+	font-size: 14px;
+	font-weight: bolder;
+}
+
+.table>thead>tr>th {
+	border: none;
 }
 
 table.pos tbody tr td input {
@@ -47,6 +84,11 @@ table.pos tbody tr td input::-webkit-inner-spin-button {
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+table.receipt>tbody>tr>td, 
+table.receipt>tfoot>tr>td {
+	padding: 10px;
+}
+
 h4.current-page {
 	margin-top: 30px;
 	margin-bottom: 20px;
@@ -56,30 +98,50 @@ nav-menu {
 	float: none;
 	margin: 0 auto;
 	text-align: center;
+	margin-bottom: 50px;
+}
+
+nav-menu h1 {
+	font-size: 50px;
 }
 
 ul.nav-menu {
-	margin-top: 35px;
-	margin-bottom: 35px;
+	margin-top: 25px;
+	margin-bottom: 45px;
 }
 
 ul.nav-menu li {
 	display: inline;
 	margin-left: 25px;
 	margin-right: 25px;
+	text-decoration: underline;
 }
 
 ul.nav-menu li a {
 	list-style-type: none;
  	display: inline;
- 	text-decoration: underline;
 }
 
 ul.nav-menu li a.active {
-	opacity: .6;
 	font-style: italic;
+	color: #999;
 }
 
 ul.nav-menu li a h3 {
 	display: inline;
+}
+
+#checkoutButton {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	border-radius: 0;
+	font-size: 25px;
+}
+
+.checkout-total-price {
+	display: inline-flex;
+	font-size: 35px;
+	letter-spacing: 3px;
 }

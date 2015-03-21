@@ -3,33 +3,32 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="mobile-web-app-capable" content="yes">
 		<title>Hunts Point POS</title>
+		<link href="//fonts.googleapis.com/css?family=Lato:300,300italic|Inconsolata" rel="stylesheet" type="text/css">
 		<link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="/icono/dist/icono.min.css">
 	    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
 	    <link rel="stylesheet" href="/css/main.css">
-	    <style>
-	    	* {
-	    		font-family: 'Lora', serif;
-	    	}
-	    	.col-centered {
-			    float: none;
-			    margin: 0 auto;
-			}
-	    </style>
+	    <link rel="stylesheet" href="odometer/themes/odometer-theme-minimal.css"/>
 	</head>
 
-	<body ng-controller="body" class="container">
+	<body ng-controller="body" class="container" ng-class="{ 'not-home': !onHomePage() }">
 		
-		<nav-menu></nav-menu>
-		
+		<nav-menu ng-hide="onHomePage()"></nav-menu>
+
 		<div ng-view></div>
 
 		<script src="/jquery/dist/jquery.min.js"></script>
 	    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/angular/angular.min.js"></script>
-		<script src="/angular-route/angular-route.min.js"></script>
-		<script src="/lodash/lodash.min.js"></script>
 		<script src="/socket.io-client/socket.io.js"></script>
+
+		<script src="/angular-route/angular-route.min.js"></script>
+		<script src="/angular-animate/angular-animate.min.js"></script>
+		<script src="/lodash/lodash.min.js"></script>
+		<script src='/angular-upload/angular-upload.min.js'></script>
+		<script src="/odometer/odometer.min.js"></script>
+		<script src="/angular-odometer-js/dist/angular-odometer.min.js"></script>
+
 		<script src="/js/pos.js"></script>
 		<script src="/js/routes.js"></script>
 		<script src="/js/services.js"></script>

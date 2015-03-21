@@ -1,8 +1,8 @@
-<div class="col-md-5" style="margin: 0 auto; float: none;">
+<div>
   
   <div class="panel panel-primary">
     
-    <div class="panel-heading text-center lead">{{ transaction.date | date:'medium' }}</div>
+    <div class="panel-heading text-center lead">{{ transaction.date || backupDate | date:'medium' }}</div>
     
     <table class="receipt table table-hover">
         <thead>

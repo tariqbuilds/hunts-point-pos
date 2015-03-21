@@ -46,11 +46,14 @@
 	  	<input 
 	  		name="quantity_on_hand" 
 	  		placeholder="Quantity On Hand" 
-	  		class="form-control"
-	  		type="number"
-	  		step="1"
-	  		min="0"
-	  		ng-model="product.quantity_on_hand"> 
+	  		class="form-control"> 
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="image">Upload Image</label>  
+	  <div class="col-md-4">
+	  	<input type="file" name="image" ng-model="product.image" />
 	  </div>
 	</div>
 

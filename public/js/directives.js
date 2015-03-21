@@ -134,6 +134,8 @@ pos.directive('receipt',function (Settings) {
     templateUrl: 'templates/directives/receipt.html',
     link: function (scope) {
 
+      scope.backupDate = new Date();
+      
       Settings.get().then(function (settings) {
         scope.settings = settings;
       });

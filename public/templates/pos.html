@@ -1,13 +1,22 @@
 
-<table class="pos col-md-12 table table-hover table-striped">
+<div class="text-center">
+	<span class="lead">Total</span> 
+	<br/>
+	<span class="text-success checkout-total-price">
+		$<span odometer="cart.total" odometer-options="{duration: 200}"></span>
+	</span>
+	
+	<checkout 
+		cart-total="cart.total" 
+		print-receipt="printReceipt(payment)">
+	</checkout>
+</div>
+
+<table class="pos table table-responsive table-striped table-hover">
 	<thead>
 		<tr>
 			<td colspan="6" class="text-center">
-				<!-- Manual Item Button -->
 				<add-manual-item class="pull-left" add-item="addManualItem(item)"></add-manual-item>
-				<!-- Manual Item Button -->
-
-				<checkout class="pull-right" cart-total="cart.total" print-receipt="printReceipt(payment)"></checkout>
 			</td>
 		</tr>
 		<tr class="titles">
@@ -17,12 +26,6 @@
 			<th>Tax</th>
 			<th>Total</th>
 			<th></th>
-		</tr>
-		<tr>
-			<td colspan="3"></td>
-			<td class="lead text-success">{{ cart.total_tax | currency }}</td>
-			<td class="lead text-success">{{ cart.total | currency }}</td>
-			<td></td>
 		</tr>
 	</thead>
 	<tbody>

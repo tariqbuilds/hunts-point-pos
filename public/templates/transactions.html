@@ -1,32 +1,34 @@
+<br/>
 
-<ul class="list-group col-md-4">
-  <li class="list-group-item lead">
-  	Today's total <span class="pull-right">{{ todayTotal | currency }}</span>
-  </li>
-  <li class="list-group-item lead">
-  	Yesterday's total <span class="pull-right">{{ yesterdayTotal | currency }}</span>
-  </li>
-</ul>
+<div class="text-center">
+	<span class="">Today's Sales</span> 
+	<br/>
+	<span class="text-success checkout-total-price">
+		$ {{ todayTotal }}
+	</span>
+</div>
 
-<table ng-if="transactions" class="col-md-12 table table-hover table-striped">
+<br/><br/>
+
+<table ng-if="transactions" class="table table-hover table-striped">
 	<thead>
 		<tr>
 			<th>Time</th>
 			<th>Total</th>
 			<th>Customer Payment</th>
 			<th>Products</th>
-			<th></th>
+			<th>Open</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="transaction in transactions track by $index | orderBy: getTransactionDate(transaction):reverse">
-			<td class="col-md-2"> {{ transaction.date | date:'short' }} </td>
-			<td class="col-md-2"> {{ transaction.total | currency }} </td>
-			<td class="col-md-2"> {{ transaction.payment | currency }}</td>
-			<td class="col-md-2"> {{ getNumberOfProducts(transaction.products) }} </td>
+			<td> {{ transaction.date | date:'short' }} </td>
+			<td> {{ transaction.total | currency }} </td>
+			<td> {{ transaction.payment | currency }}</td>
+			<td> {{ getNumberOfProducts(transaction.products) }} </td>
 			<td>
-				<a class="btn btn-warning" href="#/transaction/{{ transaction._id }}">
-					View Receipt
+				<a class="btn btn-info" href="#/transaction/{{ transaction._id }}">
+					<i class="glyphicon glyphicon-new-window"></i>
 				</a>
 			</td>
 		</tr>

@@ -1,4 +1,9 @@
-var pos = angular.module('POS', ['ngRoute']);
+var pos = angular.module('POS', [
+  'ngRoute', 
+  'ngAnimate',
+  'lr.upload',
+  'ui.odometer',
+]);
 
 
 ///////////////////////////////////////////////////
@@ -19,8 +24,12 @@ var socket = io.connect(serverAddress);
 ////////////////// Controllers ////////////////// //
 ////////////////////////////////////////////////////
 
-pos.controller('body', function ($scope, Settings) {
+pos.controller('body', function ($scope, $location, Settings) {
   
+  $scope.onHomePage = function () {
+    return ($location.path() === '/' || $location.path() === '#/');
+  };
+
   Settings.get().then(function (settings) {
     $scope.settings = settings;
   });
@@ -64,7 +73,7 @@ pos.controller('newProductController', function ($scope, $location, $route, Inve
 
 });
 
-pos.controller('editProductController', function ($scope, $location, $routeParams, Inventory) {
+pos.controller('editProductController', function ($scope, $location, $routeParams, Inventory, upload) {
     
   // get and set inventory
   Inventory.getProduct($routeParams.productId).then(function (product) {
@@ -85,6 +94,28 @@ pos.controller('editProductController', function ($scope, $location, $routeParam
       $location.path('/inventory');
     });
   };
+
+
+  $scope.doUpload = function () {
+    console.log('yoyoyo');
+
+    upload({
+      url: '/upload',
+      method: 'POST',
+      data: {
+        anint: 123,
+        aBlob: Blob([1,2,3]), // Only works in newer browsers
+        aFile: $scope.product.image, // a jqLite type="file" element, upload() will extract all the files from the input and put them into the FormData object before sending.
+      }
+    }).then(
+      function (response) {
+        console.log(response.data); // will output whatever you choose to return from the server on a successful upload
+      },
+      function (response) {
+          console.error(response); //  Will return if status code is above 200 and lower than 300, same as $http
+      }
+    );
+  }
 
 });
 
