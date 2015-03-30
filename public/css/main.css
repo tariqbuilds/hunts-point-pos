@@ -132,6 +132,7 @@ ul.nav-menu li a h3 {
 }
 
 #checkoutButton {
+	padding: 0 30px 0 30px;
 	position: absolute;
 	right: 0;
 	top: 0;

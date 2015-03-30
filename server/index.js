@@ -1,12 +1,14 @@
-var express = require('express')
-var app 	= require('express')()
-var server 	= app.listen(80)
-var io = require('socket.io')(server)
+var express = require('express'),
+app 		= require('express')(),
+server 		= app.listen(80),
+io 			= require('socket.io')(server),
+path 		= require('path'),
+bodyParser 	= require('body-parser'),
+publicPath 	= '/../public/',
+liveCart
 
-var path 	= require('path')
-var bodyParser = require('body-parser')
-var publicPath = '/../public/'
-var liveCart
+console.log('Hunts Point POS')
+console.log('Server started')
 
 app.use(express.static(path.resolve(__dirname + publicPath)))
 app.use(express.static(path.resolve(__dirname + '/../bower_components')))
@@ -16,7 +18,6 @@ app.get('/', function (req, res) {
 })
 
 app.use('/api', require('./api'))
-
 
 // Websocket logic for Live Cart
 io.on('connection', function (socket) {
