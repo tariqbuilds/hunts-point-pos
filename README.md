@@ -1,5 +1,7 @@
 # Hunts Point POS
 
+[![Join the chat at https://gitter.im/afaqurk/hunts-point-pos](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/afaqurk/hunts-point-pos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A simple, beautiful, & real-time Point of Sale system written in Node.js & Angular.js
 
 
