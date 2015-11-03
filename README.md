@@ -31,3 +31,17 @@ A simple, beautiful, & real-time Point of Sale system written in Node.js & Angul
 	- Cash Drawers
 	- Barcode Scanners (USB, Bluetooth)
 	- Touch screen panel (USB)
+
+## Quick Start
+
+To start using hunts-point-pos is needed to isntall some dependencies.
+
+```bash
+$ npm install
+```
+
+Then, you need to install bower dependencies
+
+```bash
+$ bower install
+```
