@@ -7,7 +7,41 @@ A simple, beautiful, & real-time Point of Sale system written in Node.js & Angul
 
 #### [Try the Demo](http://pos.afaqtariq.com/)
 
-## Features for v0.5
+# Quick Start
+
+To start using hunts-point-pos:
+
+## Step 1: Get code
+
+Clone repo via git 
+```bash
+git clone https://github.com/afaqurk/hunts-point-pos.git
+```
+
+Or [download Hunts Point POS here](https://github.com/afaqurk/hunts-point-pos/archive/master.zip).
+
+## Step 2: Install Dependencies
+
+Go to the Hunts Point POS directory and run:
+
+```bash
+$ npm install
+$ bower install
+```
+
+## Step 3: Run the app!
+
+To start the app, run:
+
+```bash
+node server/
+```
+
+This will install all dependencies required to run the node app.
+
+# Project Goals
+
+## Planned Features for v0.5
 - [ ] esc/pos integration
 - [ ] scan-search on inventory page
 - [ ] inventory increment page
@@ -20,7 +54,7 @@ A simple, beautiful, & real-time Point of Sale system written in Node.js & Angul
 	- [ ] line graph of product's selling history 
 
 
-## Project Goals
+## Project Principles
 
 - A clean & beautiful interface
 - Feature-set targeted towards single store operation
@@ -31,17 +65,3 @@ A simple, beautiful, & real-time Point of Sale system written in Node.js & Angul
 	- Cash Drawers
 	- Barcode Scanners (USB, Bluetooth)
 	- Touch screen panel (USB)
-
-## Quick Start
-
-To start using hunts-point-pos is needed to isntall some dependencies.
-
-```bash
-$ npm install
-```
-
-Then, you need to install bower dependencies
-
-```bash
-$ bower install
-```
