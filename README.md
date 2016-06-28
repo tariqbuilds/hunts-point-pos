@@ -4,9 +4,13 @@
 
 A simple, beautiful, & real-time Point of Sale system written in Node.js & Angular.js
 
-Open Source MIT Licensed.
+Open Source: MIT Licensed.
 
-#### [Try the Demo](http://pos.afaqtariq.com/)
+##### [See Screenshots](#screenshots)
+
+<h3 align="center">
+<img src="https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/home-page.png" width="70%" align="center">
+</h3>
 
 # Quick Start
 
@@ -66,3 +70,27 @@ This will install all dependencies required to run the node app.
 	- Cash Drawers
 	- Barcode Scanners (USB, Bluetooth)
 	- Touch screen panel (USB)
+
+
+# Screenshots
+
+Welcome Screen
+![home page of hunts point pos](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/home-page.png)
+
+Manage Inventory
+![Inventory page screenshot](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/inventory.png)
+
+Inventory - Edit Product
+![Inventory item view](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/item.png)
+
+Live Cart (Updates in real-time)
+![Live Cart screenshot](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/live-cart.png)
+
+POS 1
+![](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/checkout-screen.png)
+
+POS 2
+![](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/checkout-modal.png)
+
+Transactions
+![](https://raw.githubusercontent.com/afaqurk/screenshots/master/hunts-point-pos/transactions.png)
