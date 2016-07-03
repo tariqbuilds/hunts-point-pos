@@ -141,7 +141,6 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
         $scope.$digest();
       } 
       else {
-          console.log('KeyUp: "' + $scope.barcode + '"');
         $scope.barcode += String.fromCharCode(e.which);
       }
 
