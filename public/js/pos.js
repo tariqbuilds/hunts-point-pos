@@ -146,7 +146,9 @@ pos.controller('posController', function ($scope, $location, Inventory, Transact
 
   }
 
-  $(document).on('keypress', barcodeHandler);
+  $(document)
+    .off('keypress')
+    .on('keypress', barcodeHandler);
 
   var rawCart = {
     products: [],
