@@ -4,6 +4,7 @@
   "description": "A proof-of-concept minus the proof.",
   "main": "server/index.js",
   "scripts": {
+    "install": "bower install",
     "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
