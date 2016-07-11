@@ -1,4 +1,4 @@
-FROM docker.io/node:4-onbuild
+FROM node:4.4-slim
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app/package.json
 RUN npm install
