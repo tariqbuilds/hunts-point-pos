@@ -1,11 +1,12 @@
-FROM node:4.4-slim
+FROM node:5.12
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app/package.json
+COPY bower.json  /usr/src/app/bower.json
 RUN npm install
 RUN npm install -g bower --save
-RUN mkdir bower_components && touch .npmrc
-COPY ./ /usr/src/app
 RUN bower install --allow-root
+COPY ./ /usr/src/app
 RUN chown -R 1001:1001 /usr/src/app
 USER 1001
-EXPOSE 80
+EXPOSE 8080
+CMD npm start
