@@ -1,4 +1,4 @@
-FROM library/node:5.12
+FROM library/node:latest
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app/package.json
 COPY bower.json  /usr/src/app/bower.json
