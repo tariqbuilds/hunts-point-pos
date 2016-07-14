@@ -1,4 +1,4 @@
-FROM node:5.12
+FROM docker.io/node:5.12
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app/package.json
 COPY bower.json  /usr/src/app/bower.json
