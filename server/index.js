@@ -1,6 +1,6 @@
 var express = require('express'),
 app 		= require('express')(),
-server 		= app.listen(80),
+server 		= app.listen(process.env.PORT || 8080),
 io 			= require('socket.io')(server),
 path 		= require('path'),
 bodyParser 	= require('body-parser'),
@@ -43,5 +43,5 @@ io.on('connection', function (socket) {
 		// broadcast updated live cart to all websocket clients
 		socket.broadcast.emit('update-live-cart-display', liveCart)
 	})
-
+// test comment insert pranavi
 })
